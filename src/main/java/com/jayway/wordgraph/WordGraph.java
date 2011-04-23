@@ -6,6 +6,9 @@ import static com.google.common.collect.Collections2.transform;
 //@END_VERSION 4
 //@BEGIN_VERSION 6
 import static com.google.common.collect.Lists.newLinkedList;
+//@BEGIN_VERSION 9
+import static java.util.Collections.max;
+//@END_VERSION 9
 import static java.util.Collections.singletonMap;
 //@END_VERSION 6
 //@BEGIN_VERSION 5
@@ -18,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 //@BEGIN_VERSION 6
 import java.util.Comparator;
 //@END_VERSION 6
@@ -151,8 +153,8 @@ public class WordGraph {
     //@END_VERSION 8
 
     //@BEGIN_VERSION 9
-	public static String histogram(List<Map<String, Integer>> input) {
-		int maxWidth = Collections.max(input, COMPARE_BY_KEY_LENGTH).keySet().iterator().next().length();
+	public static String histogram(Collection<Map<String, Integer>> input) {
+		int maxWidth = max(input, COMPARE_BY_KEY_LENGTH).keySet().iterator().next().length();
 		StringBuilder sb = new StringBuilder();
 		String newline = System.getProperty("line.separator");
 		for (Map<String, Integer> wordCount : input) {

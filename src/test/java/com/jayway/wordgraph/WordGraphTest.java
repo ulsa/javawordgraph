@@ -53,19 +53,19 @@ public class WordGraphTest
     @Test
     public void testGatherWords() {
         Collection<String> actual;
-        List<String> expected = Arrays.asList("mary", "had", "a", "little", "lamb");
+        Collection<String> expected = Arrays.asList("mary", "had", "a", "little", "lamb");
         
         actual = WordGraph.gatherWords("   mary had a\tlittle\n   lamb    ");
-        assertArraysEqual(expected, actual);
+        assertCollectionsEqual(expected, actual);
         
     //@BEGIN_VERSION 2
         actual = WordGraph.gatherWords("., mary, had... a little; lamb!");
-        assertArraysEqual(expected, actual);
+        assertCollectionsEqual(expected, actual);
     //@END_VERSION 2
 
     //@BEGIN_VERSION 3
         actual = WordGraph.gatherWords("., MaRy, hAd... A liTTle; lAmb!");
-        assertArraysEqual(expected, actual);
+        assertCollectionsEqual(expected, actual);
     //@END_VERSION 3
     }
     //@END_VERSION 1
@@ -76,13 +76,13 @@ public class WordGraphTest
 	//    		    (= {"mary" 2 "why" 3 } (count-words ["why" "mary" "why" "mary" "why"]))))
     @Test
     public void testCountWords() {
-        ImmutableMap<String, Integer> expected = new ImmutableMap.Builder<String, Integer>()
+        Map<String, Integer> expected = new ImmutableMap.Builder<String, Integer>()
 	        .put("mary", 2)
 	        .put("why", 3)
 	        .build();
         
         Map<String, Integer> actual = WordGraph.countWords(Arrays.asList("why", "mary", "why", "mary", "why"));
-        assertMapsEqual(expected, actual);
+        assertThat(actual, is(expected));
     }
     //@END_VERSION 4
 
@@ -143,12 +143,10 @@ public class WordGraphTest
     }
     //@END_VERSION 8
 
-    private void assertMapsEqual(Map<String, Integer> expected, Map<String, Integer> actual) {
-    	assertThat(actual, is(expected));
-    }
-
-	private void assertArraysEqual(Collection<?> expected, Collection<String> actual) {
+    //@BEGIN_VERSION 1
+    private void assertCollectionsEqual(Collection<?> expected, Collection<String> actual) {
         assertThat("Collections are not of same length,", actual.size(), is(expected.size()));
         assertTrue("Collections are not equal", Arrays.equals(expected.toArray(), actual.toArray()));
     }
+    //@END_VERSION 1
 }
