@@ -30,7 +30,7 @@ public class WordGraph {
 		}
 	};
 
-    //@BEGIN_VERSION 5
+    //@BEGIN_VERSION 4
 	private static final Function<String, String> LOWER = new Function<String, String>() {
 		public String apply(String from) {
 			return from.toLowerCase();
@@ -42,9 +42,9 @@ public class WordGraph {
 			return input != null && input.length() > 0;
 		}
 	};
-    //@END_VERSION 5
+    //@END_VERSION 4
 
-    //@BEGIN_VERSION 10
+    //@BEGIN_VERSION 9
 	private static final Comparator<Map<String, Integer>> COMPARE_BY_KEY_LENGTH = new Comparator<Map<String, Integer>>() {
 		public int compare(Map<String, Integer> o1, Map<String, Integer> o2) {
 			Integer lengthFirst = o1.keySet().iterator().next().length();
@@ -52,36 +52,36 @@ public class WordGraph {
 			return lengthFirst.compareTo(lengthSecond);
 		}
 	};
-    //@END_VERSION 10
+    //@END_VERSION 9
 
-    //@BEGIN_VERSION 7
+    //@BEGIN_VERSION 6
 	private static final Comparator<Map<String, Integer>> COMPARE_BY_VALUE = new Comparator<Map<String, Integer>>() {
 		public int compare(Map<String, Integer> o1, Map<String, Integer> o2) {
 			return o1.values().iterator().next().compareTo(o2.values().iterator().next());
 		}
 	};
-    //@END_VERSION 7
+    //@END_VERSION 6
 
 	public static void main(String[] args) throws IOException {
-	    //@BEGIN_VERSION_ONLY 4
+	    //@BEGIN_VERSION_ONLY 3
 		System.out.println(gatherWords(FileUtils.readFileToString(new File(args[0]))));
+	    //@END_VERSION_ONLY 3
+	    //@BEGIN_VERSION_ONLY 4
+		System.out.println(countWords(gatherWords(FileUtils.readFileToString(new File(args[0])))));
 	    //@END_VERSION_ONLY 4
 	    //@BEGIN_VERSION_ONLY 5
-		System.out.println(countWords(gatherWords(FileUtils.readFileToString(new File(args[0])))));
-	    //@END_VERSION_ONLY 5
-	    //@BEGIN_VERSION_ONLY 6
 		System.out.println(sortCountedWords(countWords(gatherWords(FileUtils.readFileToString(new File(args[0]))))));
-	    //@END_VERSION_ONLY 6
+	    //@END_VERSION_ONLY 5
 	}
 
-    //@BEGIN_VERSION 5
+    //@BEGIN_VERSION 4
 	public static Collection<String> gatherWords(String s) {
 		String[] words = Pattern.compile("\\W+").split(s);
 		return transform(filter(Arrays.asList(words), NO_EMPTY), LOWER);
 	}
-    //@END_VERSION 5
+    //@END_VERSION 4
 
-    //@BEGIN_VERSION 6
+    //@BEGIN_VERSION 5
 	public static Map<String, Integer> countWords(Collection<String> words) {
 		Reducer<Map<String, Integer>, String> count = new Reducer<Map<String, Integer>, String>() {
 			public Map<String, Integer> reduce(Map<String, Integer> accum, String next) {
@@ -95,17 +95,17 @@ public class WordGraph {
 		};
 		return new Reductor<Map<String, Integer>, String>(count).reduce(new HashMap<String, Integer>(), words);
 	}
-    //@END_VERSION 6
+    //@END_VERSION 5
 
-    //@BEGIN_VERSION 7
+    //@BEGIN_VERSION 6
 	public static Collection<Map<String, Integer>> sortCountedWords(Map<String, Integer> words) {
 		List<Map<String, Integer>> maps = newLinkedList(transform(words.entrySet(), ENTRY_TO_MAP));
 		sort(maps, COMPARE_BY_VALUE);
 		return maps;
 	}
-    //@END_VERSION 7
+    //@END_VERSION 6
 
-    //@BEGIN_VERSION 8
+    //@BEGIN_VERSION 7
 	public static String repeatStr(String s, int n) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) {
@@ -113,9 +113,9 @@ public class WordGraph {
 		}
 		return sb.toString();
 	}
-    //@END_VERSION 8
+    //@END_VERSION 7
 
-    //@BEGIN_VERSION 9
+    //@BEGIN_VERSION 8
 	public static String histogramEntry(Map<String, Integer> wordCount, int width) {
 		String format = "%-" + width + "." + width + "s %s";
 		Entry<String, Integer> entry = wordCount.entrySet().iterator().next();
@@ -123,9 +123,9 @@ public class WordGraph {
 		Integer count = entry.getValue();
 		return String.format(format, word, repeatStr("#", count));
 	}
-    //@END_VERSION 9
+    //@END_VERSION 8
 
-    //@BEGIN_VERSION 10
+    //@BEGIN_VERSION 9
 	public static String histogram(List<Map<String, Integer>> input) {
 		int maxWidth = Collections.max(input, COMPARE_BY_KEY_LENGTH).keySet().iterator().next().length();
 		StringBuilder sb = new StringBuilder();
@@ -136,5 +136,5 @@ public class WordGraph {
 		}
 		return sb.toString();
 	}
-    //@END_VERSION 10
+    //@END_VERSION 9
 }
