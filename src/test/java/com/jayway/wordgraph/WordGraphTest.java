@@ -2,7 +2,9 @@ package com.jayway.wordgraph;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+//@BEGIN_VERSION 1
 import static org.junit.Assert.assertTrue;
+//@END_VERSION 1
 
 import java.util.Arrays;
 //@BEGIN_VERSION 1
