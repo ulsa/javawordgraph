@@ -5,15 +5,21 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+//@BEGIN_VERSION 1
 import java.util.Collection;
+//@BEGIN_VERSION 5
 import java.util.Collections;
+//@END_VERSION 5
 import java.util.List;
+//@END_VERSION 1
 import java.util.Map;
 
 import org.junit.Test;
 
+//@BEGIN_VERSION 5
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+//@END_VERSION 5
 
 public class WordGraphTest
 {

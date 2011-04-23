@@ -19,8 +19,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+//@BEGIN_VERSION 6
 import java.util.Comparator;
+//@END_VERSION 6
+//@BEGIN_VERSION 5
 import java.util.HashMap;
+//@END_VERSION 5
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
