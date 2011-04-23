@@ -1,12 +1,20 @@
 package com.jayway.wordgraph;
 
+//@BEGIN_VERSION 4
 import static com.google.common.collect.Collections2.filter;
 import static com.google.common.collect.Collections2.transform;
+//@END_VERSION 4
+//@BEGIN_VERSION 6
 import static com.google.common.collect.Lists.newLinkedList;
+//@END_VERSION 6
 import static java.util.Collections.singletonMap;
+//@BEGIN_VERSION 5
 import static java.util.Collections.sort;
+//@END_VERSION 5
 
+//@BEGIN_VERSION 3
 import java.io.File;
+//@END_VERSION 3
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,19 +24,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+//@BEGIN_VERSION 4
 import java.util.regex.Pattern;
+//@END_VERSION 4
 
+//@BEGIN_VERSION 3
 import org.apache.commons.io.FileUtils;
+//@END_VERSION 3
 
 import com.google.common.base.Function;
+//@BEGIN_VERSION 4
 import com.google.common.base.Predicate;
+//@END_VERSION 4
 
 public class WordGraph {
+    //@BEGIN_VERSION 6
 	private static final Function<Entry<String, Integer>, Map<String, Integer>> ENTRY_TO_MAP = new Function<Entry<String, Integer>, Map<String, Integer>>() {
 		public Map<String, Integer> apply(Entry<String, Integer> from) {
 			return singletonMap(from.getKey(), from.getValue());
 		}
 	};
+    //@END_VERSION 6
 
     //@BEGIN_VERSION 4
 	private static final Function<String, String> LOWER = new Function<String, String>() {
@@ -72,6 +88,9 @@ public class WordGraph {
 	    //@BEGIN_VERSION_ONLY 5
 		System.out.println(sortCountedWords(countWords(gatherWords(FileUtils.readFileToString(new File(args[0]))))));
 	    //@END_VERSION_ONLY 5
+	    //@BEGIN_VERSION 8
+		System.out.println(histogram(sortCountedWords(countWords(gatherWords(FileUtils.readFileToString(new File(args[0])))))));
+	    //@END_VERSION 8
 	}
 
     //@BEGIN_VERSION 4
