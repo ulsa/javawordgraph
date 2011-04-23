@@ -6,8 +6,8 @@ import static com.google.common.collect.Collections2.transform;
 //@END_VERSION 4
 //@BEGIN_VERSION 6
 import static com.google.common.collect.Lists.newLinkedList;
-//@END_VERSION 6
 import static java.util.Collections.singletonMap;
+//@END_VERSION 6
 //@BEGIN_VERSION 5
 import static java.util.Collections.sort;
 //@END_VERSION 5
@@ -32,7 +32,9 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 //@END_VERSION 3
 
+//@BEGIN_VERSION 6
 import com.google.common.base.Function;
+//@END_VERSION 6
 //@BEGIN_VERSION 4
 import com.google.common.base.Predicate;
 //@END_VERSION 4
