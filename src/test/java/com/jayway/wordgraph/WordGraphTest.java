@@ -12,7 +12,9 @@ import java.util.Collections;
 //@END_VERSION 5
 import java.util.List;
 //@END_VERSION 1
+//@BEGIN_VERSION 4
 import java.util.Map;
+//@END_VERSION 4
 
 import org.junit.Test;
 

@@ -29,7 +29,9 @@ import java.util.HashMap;
 //@END_VERSION 5
 import java.util.List;
 import java.util.Map;
+//@BEGIN_VERSION 6
 import java.util.Map.Entry;
+//@END_VERSION 6
 //@BEGIN_VERSION 4
 import java.util.regex.Pattern;
 //@END_VERSION 4
@@ -38,10 +40,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 //@END_VERSION 3
 
-//@BEGIN_VERSION 6
-import com.google.common.base.Function;
-//@END_VERSION 6
 //@BEGIN_VERSION 4
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 //@END_VERSION 4
 
