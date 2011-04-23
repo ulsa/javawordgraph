@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 //@END_VERSION 1
 
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
 //@BEGIN_VERSION 1
 import java.util.Collection;
 //@BEGIN_VERSION 5
@@ -43,6 +45,18 @@ public class WordGraphTest
 			}
 		});
 		assertThat(product.reduce(1, Arrays.asList(1, 2, 3, 4)), is(24));
+
+        Reductor<Deque<Integer>, Integer> map = new Reductor<Deque<Integer>, Integer>(new Reducer<Deque<Integer>, Integer>() {
+            public Deque<Integer> reduce(Deque<Integer> accum, Integer next) {
+                accum.addFirst(next);
+                return accum;
+            }
+        });
+        Deque<Integer> expected = new LinkedList<Integer>();
+        expected.add(3);
+        expected.add(2);
+        expected.add(1);
+        assertThat(map.reduce(new LinkedList<Integer>(), Arrays.asList(1, 2, 3)), is(expected));
     }
     //@END_VERSION 0
     

@@ -1,7 +1,7 @@
 package com.jayway.wordgraph;
 
 public class Reductor<A, T> {
-	private Reducer<A, T> reducer;
+	private final Reducer<A, T> reducer;
 
 	public Reductor(Reducer<A, T> reducer) {
 		this.reducer = reducer;
