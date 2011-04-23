@@ -21,6 +21,7 @@
 			<plugin>
 				<groupId>com.jayway.maven.plugins.lab</groupId>
 				<artifactId>maven-lab-plugin</artifactId>
+				<version>1.0.0.RELEASE-SNAPSHOT</version>
 			</plugin>
 		</plugins>
 	</build>
