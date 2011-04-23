@@ -1,11 +1,11 @@
 This program, wordgraph, will read a text file, count word occurrences and produce
 a histogram of the results.
 
-The lab is constructed using maven-lab-plugin. Check out this lab from github.com:
+Check out this lab from github.com:
 
 	git clone git@github.com:ulsa/javawordgraph.git
 
-Initialize the lab to step 0 by running:
+The lab is constructed using [maven-lab-plugin](https://github.com/jayway/maven-lab-plugin). Initialize the lab to step 0 by running:
 
 	mvn lab:init
 
