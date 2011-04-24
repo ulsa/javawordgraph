@@ -1,63 +1,29 @@
 package com.jayway.wordgraph;
 
-//@BEGIN_VERSION 4
 import static com.google.common.collect.Collections2.filter;
 import static com.google.common.collect.Collections2.transform;
-//@END_VERSION 4
-//@BEGIN_VERSION 6
 import static com.google.common.collect.Lists.newLinkedList;
-//@BEGIN_VERSION 9
 import static java.util.Collections.max;
-//@END_VERSION 9
 import static java.util.Collections.singletonMap;
-//@END_VERSION 6
-//@BEGIN_VERSION 5
 import static java.util.Collections.sort;
-//@END_VERSION 5
 
-//@BEGIN_VERSION 3
 import java.io.File;
-//@END_VERSION 3
 import java.io.IOException;
-//@BEGIN_VERSION 4
 import java.util.Arrays;
 import java.util.Collection;
-//@END_VERSION 4
-//@BEGIN_VERSION 6
 import java.util.Comparator;
-//@END_VERSION 6
-//@BEGIN_VERSION 5
 import java.util.HashMap;
-//@END_VERSION 5
-//@BEGIN_VERSION 5
 import java.util.List;
 import java.util.Map;
-//@END_VERSION 5
-//@BEGIN_VERSION 6
 import java.util.Map.Entry;
-//@END_VERSION 6
-//@BEGIN_VERSION 4
 import java.util.regex.Pattern;
-//@END_VERSION 4
 
-//@BEGIN_VERSION 3
 import org.apache.commons.io.FileUtils;
-//@END_VERSION 3
 
-//@BEGIN_VERSION 4
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-//@END_VERSION 4
 
 public class WordGraph {
-    //@BEGIN_VERSION 6
-	private static final Function<Entry<String, Integer>, Map<String, Integer>> ENTRY_TO_MAP = new Function<Entry<String, Integer>, Map<String, Integer>>() {
-		public Map<String, Integer> apply(Entry<String, Integer> from) {
-			return singletonMap(from.getKey(), from.getValue());
-		}
-	};
-    //@END_VERSION 6
-
     //@BEGIN_VERSION 4
 	private static final Function<String, String> LOWER = new Function<String, String>() {
 		public String apply(String from) {
@@ -72,6 +38,20 @@ public class WordGraph {
 	};
     //@END_VERSION 4
 
+    //@BEGIN_VERSION 6
+	private static final Function<Entry<String, Integer>, Map<String, Integer>> ENTRY_TO_MAP = new Function<Entry<String, Integer>, Map<String, Integer>>() {
+		public Map<String, Integer> apply(Entry<String, Integer> from) {
+			return singletonMap(from.getKey(), from.getValue());
+		}
+	};
+
+	private static final Comparator<Map<String, Integer>> COMPARE_BY_VALUE = new Comparator<Map<String, Integer>>() {
+		public int compare(Map<String, Integer> o1, Map<String, Integer> o2) {
+			return o1.values().iterator().next().compareTo(o2.values().iterator().next());
+		}
+	};
+    //@END_VERSION 6
+
     //@BEGIN_VERSION 9
 	private static final Comparator<Map<String, Integer>> COMPARE_BY_KEY_LENGTH = new Comparator<Map<String, Integer>>() {
 		public int compare(Map<String, Integer> o1, Map<String, Integer> o2) {
@@ -82,15 +62,11 @@ public class WordGraph {
 	};
     //@END_VERSION 9
 
-    //@BEGIN_VERSION 6
-	private static final Comparator<Map<String, Integer>> COMPARE_BY_VALUE = new Comparator<Map<String, Integer>>() {
-		public int compare(Map<String, Integer> o1, Map<String, Integer> o2) {
-			return o1.values().iterator().next().compareTo(o2.values().iterator().next());
-		}
-	};
-    //@END_VERSION 6
-
 	public static void main(String[] args) throws IOException {
+		if (args.length != 1) {
+			System.err.println("Usage: WordGraph <filename>");
+			System.exit(1);
+		}
 	    //@BEGIN_VERSION_ONLY 3
 		System.out.println(gatherWords(FileUtils.readFileToString(new File(args[0]))));
 	    //@END_VERSION_ONLY 3
@@ -114,8 +90,8 @@ public class WordGraph {
 
     //@BEGIN_VERSION 5
 	public static Map<String, Integer> countWords(Collection<String> words) {
-		Reducer<Map<String, Integer>, String> count = new Reducer<Map<String, Integer>, String>() {
-			public Map<String, Integer> reduce(Map<String, Integer> accum, String next) {
+		Function2<Map<String, Integer>, String> count = new Function2<Map<String, Integer>, String>() {
+			public Map<String, Integer> apply(Map<String, Integer> accum, String next) {
 				Integer value = accum.get(next);
 				if (value == null) {
 					value = 0;
@@ -124,7 +100,7 @@ public class WordGraph {
 				return accum;
 			}
 		};
-		return new Reductor<Map<String, Integer>, String>(count).reduce(new HashMap<String, Integer>(), words);
+		return Collections3.reduce(count, new HashMap<String, Integer>(), words);
 	}
     //@END_VERSION 5
 

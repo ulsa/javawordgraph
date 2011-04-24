@@ -1,62 +1,59 @@
 package com.jayway.wordgraph;
 
+import static com.jayway.wordgraph.Collections3.reduce;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-//@BEGIN_VERSION 1
 import static org.junit.Assert.assertTrue;
-//@END_VERSION 1
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
-//@BEGIN_VERSION 1
-import java.util.Collection;
-//@BEGIN_VERSION 5
-import java.util.Collections;
-//@END_VERSION 5
 import java.util.List;
-//@END_VERSION 1
-//@BEGIN_VERSION 4
 import java.util.Map;
-//@END_VERSION 4
 
 import org.junit.Test;
 
-//@BEGIN_VERSION 5
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-//@END_VERSION 5
 
 public class WordGraphTest
 {
     //@BEGIN_VERSION 0
 	@Test
-	public void testReduce() {
-		Reductor<Integer, Integer> sum = new Reductor<Integer, Integer>(new Reducer<Integer, Integer>() {
-			public Integer reduce(Integer accum, Integer next) {
+	public void reduceWithPlusShouldAddAllNumbers() {
+		Function2<Integer, Integer> plus = new Function2<Integer, Integer>() {
+			public Integer apply(Integer accum, Integer next) {
 				return accum + next;
 			}
-		});
-		assertThat(sum.reduce(0, Arrays.asList(1, 2, 3, 4)), is(10));
+		};
+		assertThat(reduce(plus, 0, Arrays.asList(1, 2, 3, 4)), is(10));
+	}
 
-		Reductor<Integer, Integer> product = new Reductor<Integer, Integer>(new Reducer<Integer, Integer>() {
-			public Integer reduce(Integer accum, Integer next) {
+	@Test
+	public void reduceWithTimesShouldMultiplyAllNumbers() {
+		Function2<Integer, Integer> times = new Function2<Integer, Integer>() {
+			public Integer apply(Integer accum, Integer next) {
 				return accum * next;
 			}
-		});
-		assertThat(product.reduce(1, Arrays.asList(1, 2, 3, 4)), is(24));
-
-        Reductor<Deque<Integer>, Integer> map = new Reductor<Deque<Integer>, Integer>(new Reducer<Deque<Integer>, Integer>() {
-            public Deque<Integer> reduce(Deque<Integer> accum, Integer next) {
+		};
+		assertThat(reduce(times, 1, Arrays.asList(1, 2, 3, 4)), is(24));
+	}
+	
+	@Test
+	public void reduceWithAddFirstShouldReverse() {
+		Function2<Deque<Integer>, Integer> reverse = new Function2<Deque<Integer>, Integer>() {
+            public Deque<Integer> apply(Deque<Integer> accum, Integer next) {
                 accum.addFirst(next);
                 return accum;
             }
-        });
+        };
         Deque<Integer> expected = new LinkedList<Integer>();
         expected.add(3);
         expected.add(2);
         expected.add(1);
-        assertThat(map.reduce(new LinkedList<Integer>(), Arrays.asList(1, 2, 3)), is(expected));
+        assertThat(reduce(reverse, new LinkedList<Integer>(), Arrays.asList(1, 2, 3)), is(expected));
     }
     //@END_VERSION 0
     
