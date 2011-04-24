@@ -12,11 +12,6 @@ import org.junit.Test;
 
 public class Collections3Test {
     @Test
-    public void dummyTest() {
-    }
-    
-    // @BEGIN_VERSION 0
-    @Test
     public void reduceWithPlusShouldAddAllNumbers() {
         Function2<Integer, Integer> plus = new Function2<Integer, Integer>() {
             public Integer apply(Integer accum, Integer next) {
@@ -50,5 +45,4 @@ public class Collections3Test {
         expected.add(1);
         assertThat(reduce(reverse, new LinkedList<Integer>(), Arrays.asList(1, 2, 3)), is(expected));
     }
-    // @END_VERSION 0
 }
