@@ -1,15 +1,14 @@
 package com.jayway.wordgraph;
 
+import static java.util.Collections.singletonMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableList;
@@ -37,22 +36,18 @@ public class WordGraphTest {
     // @END_VERSION 3
     @Test
     public void testGatherWords() {
-        Collection<String> actual;
-        Collection<String> expected = Arrays.asList("mary", "had", "a", "little", "lamb");
-
-        actual = WordGraph.gatherWords("   mary had a\tlittle\n   lamb    ");
-        assertCollectionsEqual(expected, actual);
+        String[] expected = new String[] {"mary", "had", "a", "little", "lamb"};
+        assertThatCollection(WordGraph.gatherWords("   mary had a\tlittle\n   lamb    "), is(expected));
 
         // @BEGIN_VERSION 2
-        actual = WordGraph.gatherWords("., mary, had... a little; lamb!");
-        assertCollectionsEqual(expected, actual);
+        assertThatCollection(WordGraph.gatherWords("., mary, had... a little; lamb!"), is(expected));
         // @END_VERSION 2
 
         // @BEGIN_VERSION 3
-        actual = WordGraph.gatherWords("., MaRy, hAd... A liTTle; lAmb!");
-        assertCollectionsEqual(expected, actual);
+        assertThatCollection(WordGraph.gatherWords("., MaRy, hAd... A liTTle; lAmb!"), is(expected));
         // @END_VERSION 3
     }
+
     // @END_VERSION 1
 
     // @BEGIN_VERSION 4
@@ -66,8 +61,7 @@ public class WordGraphTest {
             .put("why", 3)
             .build();
 
-        Map<String, Integer> actual = WordGraph.countWords(Arrays.asList("why", "mary", "why", "mary", "why"));
-        assertThat(actual, is(expected));
+        assertThat(WordGraph.countWords(Arrays.asList("why", "mary", "why", "mary", "why")), is(expected));
     }
 
     // @END_VERSION 4
@@ -84,9 +78,9 @@ public class WordGraphTest {
             .put("a", 1)
             .build();
         Collection<Map<String, Integer>> expected = new ImmutableList.Builder<Map<String, Integer>>()
-            .add(Collections.singletonMap("a", 1))
-            .add(Collections.singletonMap("c", 2))
-            .add(Collections.singletonMap("b", 3))
+            .add(singletonMap("a", 1))
+            .add(singletonMap("c", 2))
+            .add(singletonMap("b", 3))
             .build();
         assertThat(WordGraph.sortCountedWords(input), is(expected));
     }
@@ -111,7 +105,7 @@ public class WordGraphTest {
     //     (= "betty   ######" (histogram-entry ["betty" 6] 7))))
     @Test
     public void testHistogramEntry() {
-        assertThat(WordGraph.histogramEntry(Collections.singletonMap("betty", 6), 7), is("betty   ######"));
+        assertThat(WordGraph.histogramEntry(singletonMap("betty", 6), 7), is("betty   ######"));
     }
     // @END_VERSION 7
 
@@ -122,15 +116,15 @@ public class WordGraphTest {
     @Test
     public void testHistogram() {
         List<Map<String, Integer>> input = new ImmutableList.Builder<Map<String, Integer>>()
-                .add(Collections.singletonMap("mary", 2)).add(Collections.singletonMap("why", 3)).build();
+                .add(singletonMap("mary", 2))
+                .add(singletonMap("why", 3))
+                .build();
         assertThat(WordGraph.histogram(input), is("mary ##\nwhy  ###\n"));
     }
     // @END_VERSION 8
 
-    // @BEGIN_VERSION 1
-    private void assertCollectionsEqual(Collection<?> expected, Collection<String> actual) {
-        assertThat("Collections are not of same length,", actual.size(), is(expected.size()));
-        assertTrue("Collections are not equal", Arrays.equals(expected.toArray(), actual.toArray()));
+    // had trouble getting assertThat to compare a transformed collection with a list or array
+    private void assertThatCollection(Collection<String> actual, Matcher<String[]> matcher) {
+        assertThat(actual.toArray(new String[0]), matcher);
     }
-    // @END_VERSION 1
 }
