@@ -1,6 +1,21 @@
 This program, wordgraph, will read a text file, count word occurrences and produce
 a histogram of the results.
 
+Introduction
+------------
+This lab is about Functional Programming in Java, using mainly Google Collections. The purpose is to build a little utility that shows a histogram graph if the number of occurrences of each word in a text file. Like this:
+
+	% java ...WordGraph "README.md"
+	etc            #
+	particular     #
+	...
+	lab            #############
+	step           ################
+	a              #########################
+	the            #############################
+
+In the process, you will learn about map, filter and reduce, or as they are called in Google Collections: transform, filter, and ... well, there is no reduce in Google Collections. Hmmm. What shall we do about that?
+
 Quick Start
 -----------
 Check out this lab from github.com:
@@ -21,19 +36,19 @@ Show the current step:
 
 	mvn lab:currentStep
 
-Restore all files that were affected by the lab:
+Restore all files to the state that was before the lab:init:
 
 	mvn lab:reset
 
 To change to a particular step of the lab:
 
-	mvn lab:setStep -DlabStep=nnn
+	mvn lab:setStep -DlabStep=n
 
 Step 0: Reduce
 --------------
-You sure have been thrown into the deep end first. Google Collections has map and filter, but not reduce. In this exercise, you will implement reduce. Reduce takes a function f, an initial value val, and a collection coll. f should be a function of 2 arguments. If coll has only 1 item, it is returned and f is not called. Reduce returns the result of applying f to val and the first item in coll, then applying f to that result and the 2nd item, etc.
+Google Collections has map and filter, but not reduce. In this exercise, you will implement reduce. Reduce takes a function f, an initial value val, and a collection coll. f should be a function of 2 arguments. Reduce returns the result of applying f to val and the first item in coll, then applying f to that result and the 2nd item, etc.
 
-We provide an interface that should be used for the function that reduce takes:
+We provide an interface for the function that reduce takes:
 
     public interface Function2<A, T> {
         public A apply(A accum, T next);
@@ -47,7 +62,7 @@ We also provide a skeleton for the reduce function:
         }
     }
 
-An example of using reduce:
+Here is an example of using reduce:
 
     Function2<Integer, Integer> plus = new Function2<Integer, Integer>() {
         public Integer apply(Integer accum, Integer next) {
@@ -60,15 +75,15 @@ Step 1: Gather Words
 --------------------
 Back to the real business problem. In comments for the test methods you can see the Clojure equivalents of the tests. I have left them there because I think that they are more readable than the Java test code, and that they convey the essence of the tests quite clearly.
 
-Write a function that extracts words from a string, splitting words on whitespace. Note that there is a main method that you can run on any text file of choice.
+Write a function that extracts words from a string, splitting words on whitespace. Note that there is a main method that you can run on any text file of choice, like this README.md file for example.
 
 Step 2: Gather Words, Remove Punctuation
 ----------------------------------------
-Remove the punctuation. Run main if you want.
+Remove the punctuation. Run main.
 
 Step 3: Gather Words, Ignore Case
 ---------------------------------
-Ignore the case. Run main if you want.
+Ignore the case. Run main.
 
 Step 4: Count Words
 -------------------
@@ -76,11 +91,11 @@ Count words into a map. Perhaps you'll get some use of that reduce implementatio
 
 Step 5: Sort Counted Words
 --------------------------
-Sort by count and return a list of word/count pairs.
+Sort the map by count and return a list of word/count pairs. What's the simplest implementation of a pair? I don't know, but we chose Map, so that's what you'll use.
 
 Step 6: Repeat String
 ---------------------
-Repeat a string a given number of times.
+Repeat a string a given number of times. Like 'repeatStr "#" 3' becomes "###".
 
 Step 7: Histogram Entry
 -----------------------
