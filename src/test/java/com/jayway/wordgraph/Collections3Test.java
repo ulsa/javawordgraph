@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 public class Collections3Test {
+    // @BEGIN_VERSION REDUCE
     @Test
     public void reduceWithPlusShouldAddAllNumbers() {
         Function2<Integer, Integer, Integer> plus = new Function2<Integer, Integer, Integer>() {
@@ -30,7 +31,9 @@ public class Collections3Test {
         };
         assertThat(reduce(times, 1, Arrays.asList(1, 2, 3, 4)), is(24));
     }
+    // @END_VERSION REDUCE
 
+    // @BEGIN_VERSION FOLD
     @Test
     public void reduceWithAddFirstShouldReverse() {
         Function2<Deque<Integer>, Integer, Deque<Integer>> reverse = new Function2<Deque<Integer>, Integer, Deque<Integer>>() {
@@ -45,4 +48,5 @@ public class Collections3Test {
         expected.add(1);
         assertThat(reduce(reverse, new LinkedList<Integer>(), Arrays.asList(1, 2, 3)), is(expected));
     }
+    // @END_VERSION FOLD
 }
