@@ -41,7 +41,7 @@ public class Collections3Test {
         // @BEGIN_VERSION_ONLY REGULAR_TRANSFORM
         result = Collections2.transform(Arrays.asList(1, 2, 3, 4, 5), timeConsumingCalculation);
         // @END_VERSION_ONLY REGULAR_TRANSFORM
-        // @END_VERSION_ONLY PARALLEL_TRANSFORM
+        // @BEGIN_VERSION_ONLY PARALLEL_TRANSFORM
         result = Collections3.parallelTransform(Arrays.asList(1, 2, 3, 4, 5), timeConsumingCalculation);
         // @END_VERSION_ONLY PARALLEL_TRANSFORM
         assertThatCollection(result, is(new Integer[] {2, 4, 6, 8, 10}));
