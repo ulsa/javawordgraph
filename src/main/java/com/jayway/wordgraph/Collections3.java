@@ -7,6 +7,7 @@ public class Collections3 {
     // TODO pmap impl here
     // @END_VERSION REDUCE
 
+    // @BEGIN_VERSION REDUCE
     public static <A> A reduce(Function2<A, A, A> f, Iterable<A> coll) {
         // @BEGIN_VERSION FOLD
         Iterator<A> iterator = coll.iterator();
@@ -21,6 +22,8 @@ public class Collections3 {
         return result;
         // @END_VERSION FOLD
     }
+    // @END_VERSION REDUCE
+
     // @BEGIN_VERSION FOLD
     public static <A, B> A fold(Function2<A, B, A> f, A val, Iterable<B> coll) {
         // @BEGIN_VERSION GATHER_WORDS_WHITESPACE
