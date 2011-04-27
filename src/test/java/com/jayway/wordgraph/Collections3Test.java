@@ -22,7 +22,7 @@ public class Collections3Test {
     public void dummyTest() {
     }
 
-    // @BEGIN_VERSION PARALLEL_TRANSFORM
+    // @BEGIN_VERSION REGULAR_TRANSFORM
     @Test
     public void parallelMapShouldRunQuicker() {
         Function<Integer, Integer> timeConsumingCalculation = new Function<Integer, Integer>() {
@@ -49,7 +49,7 @@ public class Collections3Test {
         System.out.println("Transformation took " + (after-before) + " milliseconds");
         assertThat("Transform is running waaaay too slow!", after-before, is(lessThan(1200L)));
     }
-    // @END_VERSION PARALLEL_TRANSFORM
+    // @END_VERSION REGULAR_TRANSFORM
 
     // @BEGIN_VERSION REDUCE
     @Test
