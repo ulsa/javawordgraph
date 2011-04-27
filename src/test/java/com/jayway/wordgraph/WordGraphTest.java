@@ -124,7 +124,7 @@ public class WordGraphTest {
     // @END_VERSION HISTOGRAM
 
     // had trouble getting assertThat to compare a transformed collection with a list or array
-    private void assertThatCollection(Collection<String> actual, Matcher<String[]> matcher) {
-        assertThat(actual.toArray(new String[0]), matcher);
+    public static void assertThatCollection(Collection<String> actual, Matcher<String[]> matcher) {
+        assertThat(actual.toArray(new String[actual.size()]), matcher);
     }
 }
