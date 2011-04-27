@@ -49,21 +49,21 @@ Google Collections has map and filter, but not reduce. In this exercise, you wil
 
 We provide an interface for the function that reduce takes:
 
-    public interface Function2<A, T> {
-        public A apply(A accum, T next);
+    public interface Function2<A1, A2, R> {
+        public R apply(A1 accum, A2 next);
     }
 	
 We also provide a skeleton for the reduce function:
 
     public class Collections3<A, T> {
-        public static <A, T> A reduce(Function2<A, T> f, A initial, Iterable<T> coll) {
+        public static <A, T> A reduce(Function2<A, T, A> f, A initial, Iterable<T> coll) {
     	    ...
         }
     }
 
 Here is an example of using reduce:
 
-    Function2<Integer, Integer> plus = new Function2<Integer, Integer>() {
+    Function2<Integer, Integer, Integer> plus = new Function2<Integer, Integer, Integer>() {
         public Integer apply(Integer accum, Integer next) {
             return accum + next;
         }
@@ -78,15 +78,15 @@ Write a function that extracts words from a string, splitting words on whitespac
 
 Step 2: Gather Words, Remove Punctuation
 ----------------------------------------
-Remove the punctuation. Run main.
+Remove also the punctuation. Run main.
 
 Step 3: Gather Words, Ignore Case
 ---------------------------------
-Ignore the case. Run main.
+Ignore the case of the words by converting them to lowercase. Run main.
 
 Step 4: Count Words
 -------------------
-Count words into a map. Perhaps you'll get some use of that reduce implementation now?
+Count the words into a map from words to count. Perhaps you'll get some use of that reduce/fold implementation now?
 
 Step 5: Sort Counted Words
 --------------------------
