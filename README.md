@@ -1,9 +1,8 @@
-This program, wordgraph, will read a text file, count word occurrences and produce
-a histogram of the results.
+This program, wordgraph, will read a text file, count word occurrences and produce a histogram of the results.
 
 Introduction
 ------------
-This lab is about Functional Programming in Java, using mainly Google Collections. The purpose is to build a little utility that shows a histogram graph if the number of occurrences of each word in a text file. Like this:
+This lab is about Functional Programming in Java, using mainly Google Collections. The purpose is to build a little utility that shows a histogram graph of the number of occurrences of each word in a text file. Like this:
 
 	% java ...WordGraph "README.md"
 	etc            #
@@ -69,7 +68,7 @@ Here is an example of using reduce:
             return accum + next;
         }
     };
-    reduce(plus, 0, Arrays.asList(1, 2, 3, 4))
+    Collections3.reduce(plus, 0, Arrays.asList(1, 2, 3, 4))
 	
 Step 1: Gather Words
 --------------------

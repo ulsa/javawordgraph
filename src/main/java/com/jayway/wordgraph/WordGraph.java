@@ -92,7 +92,7 @@ public class WordGraph {
 
     // @BEGIN_VERSION 5
     public static Map<String, Integer> countWords(Collection<String> words) {
-        Function2<Map<String, Integer>, String> count = new Function2<Map<String, Integer>, String>() {
+        Function2<Map<String, Integer>, String, Map<String, Integer>> count = new Function2<Map<String, Integer>, String, Map<String, Integer>>() {
             public Map<String, Integer> apply(Map<String, Integer> accum, String next) {
                 Integer value = accum.get(next);
                 if (value == null) {

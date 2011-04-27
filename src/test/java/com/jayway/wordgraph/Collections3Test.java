@@ -13,7 +13,7 @@ import org.junit.Test;
 public class Collections3Test {
     @Test
     public void reduceWithPlusShouldAddAllNumbers() {
-        Function2<Integer, Integer> plus = new Function2<Integer, Integer>() {
+        Function2<Integer, Integer, Integer> plus = new Function2<Integer, Integer, Integer>() {
             public Integer apply(Integer accum, Integer next) {
                 return accum + next;
             }
@@ -23,7 +23,7 @@ public class Collections3Test {
 
     @Test
     public void reduceWithTimesShouldMultiplyAllNumbers() {
-        Function2<Integer, Integer> times = new Function2<Integer, Integer>() {
+        Function2<Integer, Integer, Integer> times = new Function2<Integer, Integer, Integer>() {
             public Integer apply(Integer accum, Integer next) {
                 return accum * next;
             }
@@ -33,7 +33,7 @@ public class Collections3Test {
 
     @Test
     public void reduceWithAddFirstShouldReverse() {
-        Function2<Deque<Integer>, Integer> reverse = new Function2<Deque<Integer>, Integer>() {
+        Function2<Deque<Integer>, Integer, Deque<Integer>> reverse = new Function2<Deque<Integer>, Integer, Deque<Integer>>() {
             public Deque<Integer> apply(Deque<Integer> accum, Integer next) {
                 accum.addFirst(next);
                 return accum;
