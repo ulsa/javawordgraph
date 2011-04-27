@@ -3,7 +3,7 @@ package com.jayway.wordgraph;
 import static com.google.common.collect.Collections2.filter;
 import static com.google.common.collect.Collections2.transform;
 import static com.google.common.collect.Lists.newLinkedList;
-import static com.jayway.wordgraph.Collections3.reduce;
+import static com.jayway.wordgraph.Collections3.fold;
 import static java.util.Collections.max;
 import static java.util.Collections.singletonMap;
 import static java.util.Collections.sort;
@@ -102,7 +102,7 @@ public class WordGraph {
                 return accum;
             }
         };
-        return reduce(count, new HashMap<String, Integer>(), words);
+        return fold(count, new HashMap<String, Integer>(), words);
     }
     // @END_VERSION SORT_COUNTED_WORDS
 

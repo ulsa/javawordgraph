@@ -1,13 +1,35 @@
 package com.jayway.wordgraph;
 
-public class Collections3<A, T> {
-    public static <A, T> A reduce(Function2<A, T, A> f, A initial, Iterable<T> coll) {
-        // @BEGIN_VERSION 1
-        A value = initial;
-        for (T next : coll) {
-            value = f.apply(value, next);
+import java.util.Iterator;
+
+public class Collections3 {
+    // @BEGIN_VERSION REDUCE
+    // TODO pmap impl here
+    // @END_VERSION REDUCE
+
+    public static <A> A reduce(Function2<A, A, A> f, Iterable<A> coll) {
+        // @BEGIN_VERSION FOLD
+        Iterator<A> iterator = coll.iterator();
+        if (!iterator.hasNext()) {
+            throw new IllegalArgumentException("coll is not allowed to be empty");
         }
-        return value;
-        // @END_VERSION 1
+        A result = iterator.next();
+        for (; iterator.hasNext();) {
+            A next = iterator.next();
+            result = f.apply(result, next);
+        }
+        return result;
+        // @END_VERSION FOLD
     }
+    // @BEGIN_VERSION FOLD
+    public static <A, B> A fold(Function2<A, B, A> f, A val, Iterable<B> coll) {
+        // @BEGIN_VERSION GATHER_WORDS_WHITESPACE
+        A result = val;
+        for (B next : coll) {
+            result = f.apply(result, next);
+        }
+        return result;
+        // @END_VERSION GATHER_WORDS_WHITESPACE
+    }
+    // @END_VERSION FOLD
 }

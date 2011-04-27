@@ -45,18 +45,22 @@ To change to a particular step of the lab:
 
 Step 0: Reduce
 --------------
-Google Collections has map and filter, but not reduce. In this exercise, you will implement reduce. Reduce takes a function f, an initial value val, and a collection coll. f should be a function of 2 arguments. Reduce returns the result of applying f to val and the first item in coll, then applying f to that result and the 2nd item, etc.
+Google Collections has map and filter, but no reduce. In this exercise, you will implement reduce. And fold. Because they're different. Fold takes an initial value, but reduce doesn't.
 
-We provide an interface for the function that reduce takes:
+Fold takes a function f, an initial value val, and a collection coll. f should be a function of 2 arguments. Reduce returns the result of applying f to val and the first item in coll, then applying f to that result and the 2nd item, etc.
+
+Reduce takes a function f, and a collection coll. f should be a function of 2 arguments. Reduce returns the result of applying f to the first item in coll and the 2nd item, then applying f to that result and the 3rd item, etc.
+
+We provide an interface for the function that both reduce and fold take:
 
     public interface Function2<A1, A2, R> {
         public R apply(A1 accum, A2 next);
     }
-	
-We also provide a skeleton for the reduce function:
 
-    public class Collections3<A, T> {
-        public static <A, T> A reduce(Function2<A, T, A> f, A initial, Iterable<T> coll) {
+We provide a skeleton for the reduce function:
+
+    public class Collections3 {
+        public static <A> A reduce(Function2<A, A, A> f, A initial, Iterable<A> coll) {
     	    ...
         }
     }
@@ -68,7 +72,24 @@ Here is an example of using reduce:
             return accum + next;
         }
     };
-    Collections3.reduce(plus, 0, Arrays.asList(1, 2, 3, 4))
+    Collections3.reduce(plus, Arrays.asList(1, 2, 3, 4))
+
+We also provide a skeleton for the fold function:
+
+    public class Collections3 {
+        public static <A,B> A fold(Function2<A, B, A> f, A initial, Iterable<B> coll) {
+    	    ...
+        }
+    }
+
+And here is an example of using fold (note the initial value 2):
+
+    Function2<Integer, Integer, Integer> times = new Function2<Integer, Integer, Integer>() {
+        public Integer apply(Integer accum, Integer next) {
+	        return accum * next;
+	    }
+	};
+    Collections3.fold(times, 2, Arrays.asList(1, 2, 3, 4))
 	
 Step 1: Gather Words
 --------------------
