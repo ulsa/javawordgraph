@@ -22,7 +22,7 @@ public class Collections3Test {
     public void dummyTest() {
     }
 
-    // @BEGIN_VERSION PMAP
+    // @BEGIN_VERSION PARALLEL_TRANSFORM
     @Test
     public void parallelMapShouldRunQuicker() {
         Function<Integer, Integer> timeConsumingCalculation = new Function<Integer, Integer>() {
