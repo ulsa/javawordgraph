@@ -25,17 +25,15 @@ The lab is constructed using [maven-lab-plugin](https://github.com/jayway/maven-
 
 	mvn lab:init
 
-Move to the next step when you have solved the problem, compiled the code and ran the tests. You can also skip to the next step if you give up and want to see a solution to this step, and take on the next.
-
-When you are ready for the next step, do this:
+Move to the next step when you have solved the problem, compiled the code and ran the tests, or if otherwise instructed to move on. You can see solutions up to the current step in src/solution/java. To move to the next step, do this:
 
 	mvn lab:next
 
-Show the current step:
+To show the current step:
 
 	mvn lab:currentStep
 
-Restore all files to the state that was before the lab:init:
+To restore all files to the state that was before lab:init:
 
 	mvn lab:reset
 
@@ -43,21 +41,34 @@ To change to a particular step of the lab:
 
 	mvn lab:setStep -DlabStep=n
 
-Step 0: Reduce
---------------
-Google Collections has map and filter, but no reduce. In this exercise, you will implement reduce. And fold. Because they're different. Fold takes an initial value, but reduce doesn't.
+Don't forget to reload this file after moving to the next step, for further instructions.
 
-Fold takes a function f, an initial value val, and a collection coll. f should be a function of 2 arguments. Reduce returns the result of applying f to val and the first item in coll, then applying f to that result and the 2nd item, etc.
+// @BEGIN_VERSION REGULAR_TRANSFORM
+Step: Regular Transform
+-----------------------
+This step has a test that illustrates the problem with regular transform when we want to apply a function that takes a significant amount of time. Just run the test and watch it fail. Ponder for a moment what can be done about it, but then move on to the next step.
+// @END_VERSION REGULAR_TRANSFORM
+
+// @BEGIN_VERSION PARALLEL_TRANSFORM
+Step: Parallel Transform
+------------------------
+OK, in this step the test has been modified to use a parallel version of transform. You have to build it. Thats your Future<T>.
+// @END_VERSION PARALLEL_TRANSFORM
+
+// @BEGIN_VERSION REDUCE
+Step: Reduce
+------------
+Google Collections has map and filter, but no reduce. In this step, you will implement reduce.
 
 Reduce takes a function f, and a collection coll. f should be a function of 2 arguments. Reduce returns the result of applying f to the first item in coll and the 2nd item, then applying f to that result and the 3rd item, etc.
 
-We provide an interface for the function that both reduce and fold take:
+Here is an interface for the function that reduce takes:
 
     public interface Function2<A1, A2, R> {
         public R apply(A1 accum, A2 next);
     }
 
-We provide a skeleton for the reduce function:
+Here is a skeleton for the reduce function:
 
     public class Collections3 {
         public static <A> A reduce(Function2<A, A, A> f, A initial, Iterable<A> coll) {
@@ -73,8 +84,16 @@ Here is an example of using reduce:
         }
     };
     Collections3.reduce(plus, Arrays.asList(1, 2, 3, 4))
+// @END_VERSION REDUCE
 
-We also provide a skeleton for the fold function:
+// @BEGIN_VERSION FOLD
+Step: Fold
+----------
+Google Collections doesn't have a fold either. In this step, you will implement fold.
+
+Fold takes an initial value, but reduce doesn't. Fold takes a function f, an initial value val, and a collection coll. f should be a function of 2 arguments. Reduce returns the result of applying f to val and the first item in coll, then applying f to that result and the 2nd item, etc.
+
+Here is a skeleton for the fold function:
 
     public class Collections3 {
         public static <A,B> A fold(Function2<A, B, A> f, A initial, Iterable<B> coll) {
@@ -82,7 +101,7 @@ We also provide a skeleton for the fold function:
         }
     }
 
-And here is an example of using fold (note the initial value 2):
+Note that fold takes a Function2, just as reduce did, although the 'next' argument may be of a different type than 'accum'. Here is an example of using fold:
 
     Function2<Integer, Integer, Integer> times = new Function2<Integer, Integer, Integer>() {
         public Integer apply(Integer accum, Integer next) {
@@ -90,38 +109,56 @@ And here is an example of using fold (note the initial value 2):
 	    }
 	};
     Collections3.fold(times, 2, Arrays.asList(1, 2, 3, 4))
+
+Note the initial value 2.
+// @END_VERSION FOLD
 	
-Step 1: Gather Words
---------------------
-Back to the real business problem. In comments for the test methods you can see the Clojure equivalents of the tests. I have left them there because I think that they are more readable than the Java test code, and that they convey the essence of the tests quite clearly.
+// @BEGIN_VERSION GATHER_WORDS_WHITESPACE
+Step Gather Words, Whitespace
+-----------------------------
+Back to the real business problem. In the test method comments, you can see the Clojure equivalents of the tests. I have added them there because I think that they are more readable than the Java test code, and that they convey the essence of the tests quite clearly.
 
 Write a function that extracts words from a string, splitting words on whitespace. Note that there is a main method that you can run on any text file of choice, like this README.md file for example.
+// @END_VERSION GATHER_WORDS_WHITESPACE
 
-Step 2: Gather Words, Remove Punctuation
-----------------------------------------
-Remove also the punctuation. Run main.
+// @BEGIN_VERSION GATHER_WORDS_PUNCTUATION
+Step Gather Words, Remove Punctuation
+-------------------------------------
+Remove not only whitespace, but also any punctuation. Run main and watch the output.
+// @END_VERSION GATHER_WORDS_PUNCTUATION
 
-Step 3: Gather Words, Ignore Case
----------------------------------
+// @BEGIN_VERSION GATHER_WORDS_LOWERCASE
+Step Gather Words, Ignore Case
+------------------------------
 Ignore the case of the words by converting them to lowercase. Run main.
+// @END_VERSION GATHER_WORDS_LOWERCASE
 
-Step 4: Count Words
--------------------
-Count the words into a map from words to count. Perhaps you'll get some use of that reduce/fold implementation now?
+// @BEGIN_VERSION COUNT_WORDS
+Step Count Words
+----------------
+Count the words into a map from words to count. Perhaps you'll get some use of that fold implementation now?
+// @END_VERSION COUNT_WORDS
 
-Step 5: Sort Counted Words
---------------------------
-Sort the map by count and return a list of word/count pairs. What's the simplest implementation of a pair? I don't know, but we chose Map, so that's what you'll use.
-
-Step 6: Repeat String
----------------------
-Repeat a string a given number of times. Like 'repeatStr "#" 3' becomes "###".
-
-Step 7: Histogram Entry
+// @BEGIN_VERSION SORT_COUNTED_WORDS
+Step Sort Counted Words
 -----------------------
-Produce a single entry in the histogram.
+Sort the map by count and return a list of word/count pairs. What's the simplest implementation of a pair? I don't know, but we chose Map, so that's what you'll use. It might look funny with a Collection of Map from String to Integer, but remember that the Map is only representing a key-value pair.
+// @END_VERSION SORT_COUNTED_WORDS
 
-Step 8: Histogram
------------------
-Produce a complete histogram.
+// @BEGIN_VERSION REPEAT_STR
+Step Repeat String
+------------------
+Repeat a string a given number of times. Like 'repeatStr "#" 3' becomes "###".
+// @END_VERSION REPEAT_STR
 
+// @BEGIN_VERSION HISTOGRAM_ENTRY
+Step Histogram Entry
+--------------------
+Produce a single entry in the histogram. Calling histogramEntry with a word-count pair of ["betty" 6] and a width of 7 should return the word "betty" left-justified within a field of 7 characters, a blank, and then six hashes: "betty   ######".
+// @END_VERSION HISTOGRAM_ENTRY
+
+// @BEGIN_VERSION HISTOGRAM
+Step Histogram
+--------------
+Produce a complete histogram. It's just a bunch of histogram entries.
+// @END_VERSION HISTOGRAM
