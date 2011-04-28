@@ -1,6 +1,10 @@
 package com.jayway.wordgraph;
 
 
+import static com.google.common.collect.Collections2.transform;
+import static com.google.common.collect.ImmutableList.copyOf;
+import static com.jayway.wordgraph.Sneak.sneakyThrow;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
@@ -10,32 +14,44 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 
 public class Collections3 {
     // @BEGIN_VERSION PARALLEL_TRANSFORM
-    public static <A> Collection<A> parallelTransform(Collection<A> fromCollection, final Function<? super A, A> function) {
-        ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(10);
-        Collection<Future<A>> futures = Lists.newArrayList();
-        for (final A task : fromCollection) {
-            Callable<A> callable = new Callable<A>() {
-                public A call() throws Exception {
-                    return function.apply(task);
-                }
-            };
-            futures.add(newFixedThreadPool.submit(callable));
-        }
-        Collection<A> results = Lists.newArrayList();
-        for (final Future<A> future : futures) {
-            try {
-                results.add(future.get(2, TimeUnit.MINUTES));
-            }
-            catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return results;
+	private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
+	private static long timeout = 1000*60;
+	
+	public static <A> Collection<A> parallelTransform(Collection<A> fromCollection, final Function<? super A, A> function) {
+		return getAll(transformInBackground(fromCollection, function));
     }
+	
+	public static <A> Function<A, Future<A>> toBackgroundFunction(final Function<? super A, A> function) {
+		return new Function<A, Future<A>>() {
+			public Future<A> apply(final A from) {
+				return threadPool.submit(new Callable<A>() {
+					public A call() throws Exception {
+						return function.apply(from);
+					}
+				});
+			}
+		};
+	};
+
+	public static <A> Collection<A> getAll(Collection<Future<A>> col) {
+		Function<Future<A>, A> fromFuture = new Function<Future<A>, A>() {
+			public A apply(Future<A> from) {
+				try {
+					return from.get(timeout, TimeUnit.MILLISECONDS);
+				} catch (Exception e) {
+					throw sneakyThrow(e);
+				}
+			}
+		};
+		return copyOf(transform(col, fromFuture));
+	}
+
+	public static <A> Collection<Future<A>> transformInBackground(Collection<A> fromCollection, final Function<? super A, A> function) {
+		return copyOf(transform(fromCollection, toBackgroundFunction(function)));
+	}
     // @END_VERSION PARALLEL_TRANSFORM
 
     // @BEGIN_VERSION REDUCE
