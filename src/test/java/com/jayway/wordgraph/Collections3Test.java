@@ -11,24 +11,35 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.mockito.verification.VerificationMode;
 
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 
 public class Collections3Test {
     @Test
@@ -63,6 +74,50 @@ public class Collections3Test {
         assertThat(future.get(2, TimeUnit.SECONDS), equalTo(2));
     }
     // @END_VERSION TO_BACKGROUND_FUNCTION
+    
+    // @BEGIN_VERSION BACKGROUND_TRANSFORM
+    @Test
+    public void backgroundTransformShouldHaveSameResult() throws Exception {
+        String expected = "hello";
+        Collection<Future<String>> futures = Collections3.transformInBackground(Collections.<Object>singleton("world"), Functions.constant(expected));
+        assertThat(Iterables.getOnlyElement(futures).get(1, TimeUnit.SECONDS), equalTo(expected));
+    }
+    
+    @Test
+    public void backgroundTransformShouldPerformFunctionOnlyOnce() throws Exception {
+        Function<Object, Integer> countingFunction = new Function<Object, Integer>() {
+            private int callCount = 0;
+            public Integer apply(Object from) {
+                return ++callCount;
+            }
+        };
+        Collection<Future<Integer>> futures = Collections3.transformInBackground(Collections.<Object>singleton("world"), countingFunction);
+        assertThat(Iterables.getOnlyElement(futures).get(1, TimeUnit.SECONDS), equalTo(1));
+        assertThat(Iterables.getOnlyElement(futures).get(1, TimeUnit.SECONDS), equalTo(1)); // check twice to force second iteration
+        assertThat(countingFunction.apply("qwe"), equalTo(2));
+    }
+    // @END_VERSION BACKGROUND_TRANSFORM
+
+    // @BEGIN_VERSION FROM_FUTURE_FUNCTION
+    @SuppressWarnings("unchecked")
+    @Test
+    public void fromFutureMustUseTimeout() throws Exception {
+        Collections3.setTimeout(1000L);
+        Future future = mock(Future.class);
+        Collections3.fromFuture().apply(future);
+        verify(future).get(1000L, TimeUnit.MILLISECONDS);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void fromFutureShouldGetValue() throws Exception {
+        Future future = Mockito.mock(Future.class);
+        Object expected = "result";
+        when(future.get(anyLong(), (TimeUnit)anyObject())).thenReturn(expected);
+        assertThat(Collections3.fromFuture().apply(future), equalTo(expected));
+    }
+
+    // @END_VERSION FROM_FUTURE_FUNCTION
 
     // @BEGIN_VERSION REGULAR_TRANSFORM
     @Test

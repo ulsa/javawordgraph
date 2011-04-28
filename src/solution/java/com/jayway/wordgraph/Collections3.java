@@ -20,11 +20,11 @@ public class Collections3 {
 	private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
 	private static long timeout = 1000*60;
 
-	public static <A> Function<A, Future<A>> toBackgroundFunction(final Function<? super A, A> function) {
-		return new Function<A, Future<A>>() {
-			public Future<A> apply(final A from) {
-				return threadPool.submit(new Callable<A>() {
-					public A call() throws Exception {
+	public static <F,T> Function<F, Future<T>> toBackgroundFunction(final Function<F, T> function) {
+		return new Function<F, Future<T>>() {
+			public Future<T> apply(final F from) {
+				return threadPool.submit(new Callable<T>() {
+					public T call() throws Exception {
 						return function.apply(from);
 					}
 				});
@@ -32,27 +32,40 @@ public class Collections3 {
 		};
 	};
     // @END_VERSION TO_BACKGROUND_FUNCTION
-	
+
+	// @BEGIN_VERSION BACKGROUND_TRANSFORM
+    public static <F,T> Collection<Future<T>> transformInBackground(Collection<F> fromCollection, Function<F, T> function) {
+        return copyOf(transform(fromCollection, toBackgroundFunction(function)));
+    }
+    // @END_VERSION BACKGROUND_TRANSFORM
+
+    // @BEGIN_VERSION FROM_FUTURE_FUNCTION
+    public static void setTimeout(long l) {
+        timeout = l;
+    }
+
+    public static <A> Function<Future<A>, A> fromFuture() {
+        return new Function<Future<A>, A>() {
+            public A apply(Future<A> from) {
+                try {
+                    return from.get(timeout, TimeUnit.MILLISECONDS);
+                } catch (Exception e) {
+                    throw sneakyThrow(e);
+                }
+            }
+        };
+    }
+    // @END_VERSION FROM_FUTURE_FUNCTION
+
     // @BEGIN_VERSION PARALLEL_TRANSFORM
-	public static <A> Collection<A> parallelTransform(Collection<A> fromCollection, Function<A, A> function) {
+	public static <F,T> Collection<T> parallelTransform(Collection<F> fromCollection, Function<F, T> function) {
 		return getAll(transformInBackground(fromCollection, function));
     }
 
 	public static <A> Collection<A> getAll(Collection<Future<A>> col) {
-		Function<Future<A>, A> fromFuture = new Function<Future<A>, A>() {
-			public A apply(Future<A> from) {
-				try {
-					return from.get(timeout, TimeUnit.MILLISECONDS);
-				} catch (Exception e) {
-					throw sneakyThrow(e);
-				}
-			}
-		};
-		return copyOf(transform(col, fromFuture));
-	}
-
-	public static <A> Collection<Future<A>> transformInBackground(Collection<A> fromCollection, Function<A, A> function) {
-		return copyOf(transform(fromCollection, toBackgroundFunction(function)));
+        return copyOf(transform(col, Collections3.<A>fromFuture()));
+//      return copyOf(transform(col, Collections3.fromFuture())); // does not work
+//      return copyOf(transform(col, fromFuture())); // does not work
 	}
     // @END_VERSION PARALLEL_TRANSFORM
 
