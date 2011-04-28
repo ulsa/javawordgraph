@@ -29,19 +29,14 @@ Move to the next step when you have solved the problem, compiled the code and ra
 
 	mvn lab:next
 
-To show the current step:
-
+Other useful commands:
 	mvn lab:currentStep
-
-To restore all files to the state that was before lab:init:
-
 	mvn lab:reset
-
-To change to a particular step of the lab:
-
 	mvn lab:setStep -DlabStep=n
 
-Don't forget to reload this file after moving to the next step, for further instructions.
+Reload this file after moving to the next step, for further instructions.
+Check HINTS.md file for hints.
+Check src/solution/java for a solution.
 
 // @BEGIN_VERSION REGULAR_TRANSFORM
 Step: Regular Transform
