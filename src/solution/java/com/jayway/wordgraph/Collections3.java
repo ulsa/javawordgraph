@@ -16,14 +16,10 @@ import java.util.concurrent.TimeUnit;
 import com.google.common.base.Function;
 
 public class Collections3 {
-    // @BEGIN_VERSION PARALLEL_TRANSFORM
+    // @BEGIN_VERSION TO_BACKGROUND_FUNCTION
 	private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
 	private static long timeout = 1000*60;
-	
-	public static <A> Collection<A> parallelTransform(Collection<A> fromCollection, final Function<? super A, A> function) {
-		return getAll(transformInBackground(fromCollection, function));
-    }
-	
+
 	public static <A> Function<A, Future<A>> toBackgroundFunction(final Function<? super A, A> function) {
 		return new Function<A, Future<A>>() {
 			public Future<A> apply(final A from) {
@@ -35,6 +31,12 @@ public class Collections3 {
 			}
 		};
 	};
+    // @END_VERSION TO_BACKGROUND_FUNCTION
+	
+    // @BEGIN_VERSION PARALLEL_TRANSFORM
+	public static <A> Collection<A> parallelTransform(Collection<A> fromCollection, Function<A, A> function) {
+		return getAll(transformInBackground(fromCollection, function));
+    }
 
 	public static <A> Collection<A> getAll(Collection<Future<A>> col) {
 		Function<Future<A>, A> fromFuture = new Function<Future<A>, A>() {
@@ -49,7 +51,7 @@ public class Collections3 {
 		return copyOf(transform(col, fromFuture));
 	}
 
-	public static <A> Collection<Future<A>> transformInBackground(Collection<A> fromCollection, final Function<? super A, A> function) {
+	public static <A> Collection<Future<A>> transformInBackground(Collection<A> fromCollection, Function<A, A> function) {
 		return copyOf(transform(fromCollection, toBackgroundFunction(function)));
 	}
     // @END_VERSION PARALLEL_TRANSFORM

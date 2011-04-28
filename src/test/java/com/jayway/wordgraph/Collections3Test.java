@@ -2,23 +2,32 @@ package com.jayway.wordgraph;
 
 // @BEGIN_VERSION FOLD
 import static com.jayway.wordgraph.Collections3.fold;
+
 // @END_VERSION FOLD
 // @BEGIN_VERSION REDUCE
 import static com.jayway.wordgraph.Collections3.reduce;
 // @END_VERSION REDUCE
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.google.common.collect.Collections2;
 
 public class Collections3Test {
@@ -26,20 +35,38 @@ public class Collections3Test {
     public void dummyTest() {
     }
 
+    // @BEGIN_VERSION TO_BACKGROUND_FUNCTION
+    private static final Function<Integer, Integer> timeConsumingCalculation = new Function<Integer, Integer>() {
+        public Integer apply(Integer from) {
+            try {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e) {
+            }
+            return from * 2;
+        }
+    };
+    
+    @Test
+    public void backgroundFunctionShouldHaveSameResult() throws Exception {
+        String expected = "hello";
+        Future<String> future = Collections3.toBackgroundFunction(Functions.constant(expected)).apply("world");
+        assertThat(future.get(1, TimeUnit.SECONDS), equalTo(expected));
+    }
+    
+    @Test
+    public void backgroundFunctionShouldReturnFast() throws Exception {
+        long before = System.currentTimeMillis();
+        Future<Integer> future = Collections3.toBackgroundFunction(timeConsumingCalculation).apply(1);
+        long after = System.currentTimeMillis();
+        assertThat(after-before, lessThan(50L));
+        assertThat(future.get(2, TimeUnit.SECONDS), equalTo(2));
+    }
+    // @END_VERSION TO_BACKGROUND_FUNCTION
+
     // @BEGIN_VERSION REGULAR_TRANSFORM
     @Test
     public void parallelMapShouldRunQuicker() {
-        Function<Integer, Integer> timeConsumingCalculation = new Function<Integer, Integer>() {
-
-            public Integer apply(Integer from) {
-                try {
-                    Thread.sleep(1000);
-                }
-                catch (InterruptedException e) {
-                }
-                return from * 2;
-            }
-        };
         long before = System.currentTimeMillis();
         Collection<Integer> result;
         // @BEGIN_VERSION_ONLY REGULAR_TRANSFORM
