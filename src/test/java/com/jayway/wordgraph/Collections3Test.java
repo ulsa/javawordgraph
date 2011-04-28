@@ -1,7 +1,11 @@
 package com.jayway.wordgraph;
 
+// @BEGIN_VERSION FOLD
 import static com.jayway.wordgraph.Collections3.fold;
+// @END_VERSION FOLD
+// @BEGIN_VERSION REDUCE
 import static com.jayway.wordgraph.Collections3.reduce;
+// @END_VERSION REDUCE
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThan;

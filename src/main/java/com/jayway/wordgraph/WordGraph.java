@@ -3,7 +3,9 @@ package com.jayway.wordgraph;
 import static com.google.common.collect.Collections2.filter;
 import static com.google.common.collect.Collections2.transform;
 import static com.google.common.collect.Lists.newLinkedList;
+//@BEGIN_VERSION FOLD
 import static com.jayway.wordgraph.Collections3.fold;
+//@END_VERSION FOLD
 import static java.util.Collections.max;
 import static java.util.Collections.singletonMap;
 import static java.util.Collections.sort;
