@@ -42,6 +42,9 @@ Check src/solution/java for a solution.
 Step: Regular Transform
 -----------------------
 This step has a test that illustrates the problem with regular transform when we want to apply a function that takes a significant amount of time. Just run the test and watch it fail. Ponder for a moment what can be done about it, but then move on to the next step.
+
+	mvn lab:next
+	
 // @END_VERSION REGULAR_TRANSFORM
 
 // @BEGIN_VERSION PARALLEL_TRANSFORM
