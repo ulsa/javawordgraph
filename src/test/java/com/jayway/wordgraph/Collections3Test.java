@@ -24,6 +24,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+
 import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -94,8 +95,7 @@ public class Collections3Test {
     @Test
     public void fromFutureMustUseTimeout() throws Exception {
         Collections3.setTimeout(1000L);
-        @SuppressWarnings("rawtypes")
-        Future future = mock(Future.class);
+        Future<Object> future = mock(Future.class);
         Collections3.fromFuture().apply(future);
         verify(future).get(1000L, TimeUnit.MILLISECONDS);
     }
@@ -103,14 +103,24 @@ public class Collections3Test {
     @SuppressWarnings("unchecked")
     @Test
     public void fromFutureShouldGetValue() throws Exception {
-        @SuppressWarnings("rawtypes")
-        Future future = Mockito.mock(Future.class);
+        Future<Object> future = Mockito.mock(Future.class);
         Object expected = "result";
         when(future.get(anyLong(), (TimeUnit)anyObject())).thenReturn(expected);
         assertThat(Collections3.fromFuture().apply(future), equalTo(expected));
     }
 
     // @END_VERSION FROM_FUTURE_FUNCTION
+
+    @SuppressWarnings("unchecked")
+    // @BEGIN_VERSION GET_ALL
+    @Test
+    public void getAllOnCollectionOfFuturesShould() throws Exception {
+        Future<Object> future = mock(Future.class);
+        Object expected = Collections.singletonList(5);
+        when(future.get(anyLong(), (TimeUnit)anyObject())).thenReturn(5);
+        assertThat(Collections3.getAll(Collections.singletonList(future)), equalTo(expected));
+    }
+    // @END_VERSION GET_ALL
 
     // @BEGIN_VERSION REGULAR_TRANSFORM
     @Test

@@ -61,13 +61,15 @@ public class Collections3 {
 	public static <F,T> Collection<T> parallelTransform(Collection<F> fromCollection, Function<F, T> function) {
 		return getAll(transformInBackground(fromCollection, function));
     }
+    // @END_VERSION PARALLEL_TRANSFORM
 
+    // @BEGIN_VERSION GET_ALL
 	public static <A> Collection<A> getAll(Collection<Future<A>> coll) {
         return copyOf(transform(coll, Collections3.<A>fromFuture()));
 //      return copyOf(transform(coll, Collections3.fromFuture())); // does not work
 //      return copyOf(transform(coll, fromFuture())); // does not work
 	}
-    // @END_VERSION PARALLEL_TRANSFORM
+    // @END_VERSION GET_ALL
 
     // @BEGIN_VERSION REDUCE
     public static <A> A reduce(Function2<A, A, A> f, Iterable<A> coll) {

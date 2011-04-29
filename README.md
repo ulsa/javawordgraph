@@ -38,15 +38,6 @@ Reload this file after moving to the next step, for further instructions.
 Check HINTS.md file for hints.
 Check src/solution/java for a solution.
 
-// @BEGIN_VERSION REGULAR_TRANSFORM
-Step: Regular Transform
------------------------
-This step has a test that illustrates the problem with regular transform when we want to apply a function that takes a significant amount of time. Just run the test and watch it fail. Ponder for a moment what can be done about it, but then move on to the next step.
-
-	mvn lab:next
-	
-// @END_VERSION REGULAR_TRANSFORM
-
 // @BEGIN_VERSION TO_BACKGROUND_FUNCTION
 Step: To Background Function
 ----------------------------
@@ -64,6 +55,15 @@ Step: From Future Function
 --------------------------
 Now you need to get the result of the background calculation. Write a Function that turns a Future<A> back into an A.
 // @END_VERSION FROM_FUTURE_FUNCTION
+
+// @BEGIN_VERSION REGULAR_TRANSFORM
+Step: Regular Transform
+-----------------------
+This step has a test that illustrates the problem with regular transform when we want to apply a function that takes a significant amount of time. Just run the test and watch it fail. Ponder for a moment what can be done about it, but then move on to the next step.
+
+	mvn lab:next
+	
+// @END_VERSION REGULAR_TRANSFORM
 
 // @BEGIN_VERSION PARALLEL_TRANSFORM
 Step: Parallel Transform
@@ -178,3 +178,12 @@ Step Histogram
 --------------
 Produce a complete histogram. It's just a bunch of histogram entries.
 // @END_VERSION HISTOGRAM
+
+// @BEGIN_VERSION DESIGN_QUESTIONS
+Step DESIGN_QUESTIONS
+--------------
+The lab is now complete, but here are some questions that you should consider:
+* Why are we using a static function rather than a field to create the function fromFuture? Could it be done differently? Pros and cons?
+* Is Collections3 a good place to store all the functions? Other suggestions? (Compare with Google Collections)
+* Both transformInBackground and fromFuture are stateful, but are used as static methods. Can you come up with a different design? There are at least two completely different approaches.
+// @END_VERSION DESIGN_QUESTIONS
