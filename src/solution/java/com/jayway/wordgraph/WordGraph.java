@@ -94,13 +94,31 @@ public class WordGraph {
         // @END_VERSION HISTOGRAM
     }
 
-    // TODO Split this into one solution for each of the three steps
-    // @BEGIN_VERSION GATHER_WORDS_LOWERCASE
+    // @BEGIN_VERSION GATHER_WORDS_WHITESPACE
     public static Collection<String> gatherWords(String s) {
-        String[] words = Pattern.compile("\\W+").split(s);
-        return transform(filter(Arrays.asList(words), NO_EMPTY), LOWER);
+        String[] words;
+        Collection<String> result;
+        // @BEGIN_VERSION_ONLY GATHER_WORDS_WHITESPACE
+        // split on whitespace
+        words = Pattern.compile("\\s+").split(s);
+        // filter non-empty elements
+        result = filter(Arrays.asList(words), NO_EMPTY);
+        // @END_VERSION_ONLY GATHER_WORDS_WHITESPACE
+        // @BEGIN_VERSION_ONLY GATHER_WORDS_PUNCTUATION
+        // split on non-word characters
+        words = Pattern.compile("\\W+").split(s);
+        // filter non-empty elements
+        result = filter(Arrays.asList(words), NO_EMPTY);
+        // @END_VERSION_ONLY GATHER_WORDS_PUNCTUATION
+        // @BEGIN_VERSION_ONLY GATHER_WORDS_LOWERCASE
+        // split on non-word characters
+        words = Pattern.compile("\\W+").split(s);
+        // filter non-empty elements and transform to lowercase
+        result = transform(filter(Arrays.asList(words), NO_EMPTY), LOWER);
+        // @END_VERSION_ONLY GATHER_WORDS_LOWERCASE
+        return result;
     }
-    // @END_VERSION GATHER_WORDS_LOWERCASE
+    // @END_VERSION GATHER_WORDS_WHITESPACE
 
     // @BEGIN_VERSION COUNT_WORDS
     public static Map<String, Integer> countWords(Collection<String> words) {
