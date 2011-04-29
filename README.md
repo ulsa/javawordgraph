@@ -68,7 +68,7 @@ Now you need to get the result of the background calculation. Write a Function t
 // @BEGIN_VERSION PARALLEL_TRANSFORM
 Step: Parallel Transform
 ------------------------
-OK, in this step the test has been modified to use a parallel version of transform. You have to implement it. Thats your Future<T>.
+In this step, the test has been modified to use a parallel version of transform. You have to implement it.
 // @END_VERSION PARALLEL_TRANSFORM
 
 // @BEGIN_VERSION REDUCE

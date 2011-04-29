@@ -94,6 +94,7 @@ public class WordGraph {
         // @END_VERSION HISTOGRAM
     }
 
+    // TODO Split this into one solution for each of the three steps
     // @BEGIN_VERSION GATHER_WORDS_LOWERCASE
     public static Collection<String> gatherWords(String s) {
         String[] words = Pattern.compile("\\W+").split(s);

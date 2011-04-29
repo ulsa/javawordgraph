@@ -17,29 +17,20 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import org.hamcrest.Matcher;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.verification.VerificationMode;
-
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
 
 public class Collections3Test {
     @Test
@@ -103,6 +94,7 @@ public class Collections3Test {
     @Test
     public void fromFutureMustUseTimeout() throws Exception {
         Collections3.setTimeout(1000L);
+        @SuppressWarnings("rawtypes")
         Future future = mock(Future.class);
         Collections3.fromFuture().apply(future);
         verify(future).get(1000L, TimeUnit.MILLISECONDS);
@@ -111,6 +103,7 @@ public class Collections3Test {
     @SuppressWarnings("unchecked")
     @Test
     public void fromFutureShouldGetValue() throws Exception {
+        @SuppressWarnings("rawtypes")
         Future future = Mockito.mock(Future.class);
         Object expected = "result";
         when(future.get(anyLong(), (TimeUnit)anyObject())).thenReturn(expected);
@@ -125,6 +118,9 @@ public class Collections3Test {
         long before = System.currentTimeMillis();
         Collection<Integer> result;
         // @BEGIN_VERSION_ONLY REGULAR_TRANSFORM
+        // A regular transform performs the calculation sequentially, which may not always good enough.
+        // In this step you're just supposed to run the tests, and maybe think about a solution.
+        // No coding. Just run mvn lab:next when you're ready to move on.
         result = Collections2.transform(Arrays.asList(1, 2, 3, 4, 5), timeConsumingCalculation);
         // @END_VERSION_ONLY REGULAR_TRANSFORM
         // @BEGIN_VERSION_ONLY PARALLEL_TRANSFORM
@@ -145,6 +141,9 @@ public class Collections3Test {
                 return accum + next;
             }
         };
+        // 1+2=3
+        //     3+3=6
+        //         6+4=10 
         assertThat(reduce(plus, Arrays.asList(1, 2, 3, 4)), is(10));
     }
 
@@ -155,6 +154,9 @@ public class Collections3Test {
                 return accum * next;
             }
         };
+        // 1*2=2
+        //     2*3=6
+        //         6*4=24 
         assertThat(reduce(times, Arrays.asList(1, 2, 3, 4)), is(24));
     }
     // @END_VERSION REDUCE
@@ -167,21 +169,24 @@ public class Collections3Test {
                 return accum * next;
             }
         };
+        // note the initial value 2
+        // 2*1=2
+        //     2*2=4
+        //         4*3=12
+        //             12*4=48
         assertThat(fold(times, 2, Arrays.asList(1, 2, 3, 4)), is(48));
     }
     
     @Test
     public void foldWithAddFirstShouldReverseListIntoEmptyList() {
+        // Deque is an interface that provides addFirst, which we use to reverse
         Function2<Deque<Integer>, Integer, Deque<Integer>> reverse = new Function2<Deque<Integer>, Integer, Deque<Integer>>() {
             public Deque<Integer> apply(Deque<Integer> accum, Integer next) {
                 accum.addFirst(next);
                 return accum;
             }
         };
-        Deque<Integer> expected = new LinkedList<Integer>();
-        expected.add(3);
-        expected.add(2);
-        expected.add(1);
+        Deque<Integer> expected = new LinkedList<Integer>(Arrays.asList(3, 2, 1));
         assertThat(fold(reverse, new LinkedList<Integer>(), Arrays.asList(1, 2, 3)), is(expected));
     }
     // @END_VERSION FOLD

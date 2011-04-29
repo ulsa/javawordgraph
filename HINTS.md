@@ -72,19 +72,21 @@ No hints yet.
 // @BEGIN_VERSION COUNT_WORDS
 Step Count Words
 ----------------
-No hints yet.
+(reduce (fn [counts x]
+          (assoc counts x (inc (get counts x 0))))
+        coll))
 // @END_VERSION COUNT_WORDS
 
 // @BEGIN_VERSION SORT_COUNTED_WORDS
 Step Sort Counted Words
 -----------------------
-No hints yet.
+Transform the Map to a collection of Maps, then sort.
 // @END_VERSION SORT_COUNTED_WORDS
 
 // @BEGIN_VERSION REPEAT_STR
 Step Repeat String
 ------------------
-No hints yet.
+StringBuilder
 // @END_VERSION REPEAT_STR
 
 // @BEGIN_VERSION HISTOGRAM_ENTRY
