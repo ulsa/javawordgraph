@@ -47,10 +47,28 @@ This step has a test that illustrates the problem with regular transform when we
 	
 // @END_VERSION REGULAR_TRANSFORM
 
+// @BEGIN_VERSION TO_BACKGROUND_FUNCTION
+Step: To Background Function
+----------------------------
+Write a Function that turns an F into a Future<T>.
+// @END_VERSION TO_BACKGROUND_FUNCTION
+
+// @BEGIN_VERSION BACKGROUND_TRANSFORM
+Step: Background Transform
+--------------------------
+Do the transform, but consider the consequences of laziness.
+// @END_VERSION BACKGROUND_TRANSFORM
+
+// @BEGIN_VERSION FROM_FUTURE_FUNCTION
+Step: From Future Function
+--------------------------
+Now you need to get the result of the background calculation. Write a Function that turns a Future<A> back into an A.
+// @END_VERSION FROM_FUTURE_FUNCTION
+
 // @BEGIN_VERSION PARALLEL_TRANSFORM
 Step: Parallel Transform
 ------------------------
-OK, in this step the test has been modified to use a parallel version of transform. You have to build it. Thats your Future<T>.
+OK, in this step the test has been modified to use a parallel version of transform. You have to implement it. Thats your Future<T>.
 // @END_VERSION PARALLEL_TRANSFORM
 
 // @BEGIN_VERSION REDUCE

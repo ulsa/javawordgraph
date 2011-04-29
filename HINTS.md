@@ -5,13 +5,38 @@ Reload this file after moving to the next step, for further hints.
 // @BEGIN_VERSION REGULAR_TRANSFORM
 Step: Regular Transform
 -----------------------
-No hints yet.
+Nothing to do in this step, just run the test.
 // @END_VERSION REGULAR_TRANSFORM
+
+// @BEGIN_VERSION TO_BACKGROUND_FUNCTION
+Step: To Background Function
+----------------------------
+Look into java.util.concurrent.ExecutorService.submit.
+// @END_VERSION TO_BACKGROUND_FUNCTION
+
+// @BEGIN_VERSION BACKGROUND_TRANSFORM
+Step: Background Transform
+--------------------------
+Look into ImmutableList.copyOf.
+// @END_VERSION BACKGROUND_TRANSFORM
+
+// @BEGIN_VERSION FROM_FUTURE_FUNCTION
+Step: From Future Function
+--------------------------
+No hints yet.
+// @END_VERSION FROM_FUTURE_FUNCTION
 
 // @BEGIN_VERSION PARALLEL_TRANSFORM
 Step: Parallel Transform
 ------------------------
 Transform the collection into a collection of Futures. Transform that back into a collection. It's lazy, so you must copy the result into something. An immutable something perhaps?
+
+Note Java's crappy type inference:
+	return copyOf(transform(coll, Collections3.fromFuture())); // does not work
+	return copyOf(transform(coll, fromFuture())); // does not work
+
+You must write:
+	return copyOf(transform(coll, Collections3.<A>fromFuture()));
 // @END_VERSION PARALLEL_TRANSFORM
 
 // @BEGIN_VERSION REDUCE

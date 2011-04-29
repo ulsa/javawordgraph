@@ -62,10 +62,10 @@ public class Collections3 {
 		return getAll(transformInBackground(fromCollection, function));
     }
 
-	public static <A> Collection<A> getAll(Collection<Future<A>> col) {
-        return copyOf(transform(col, Collections3.<A>fromFuture()));
-//      return copyOf(transform(col, Collections3.fromFuture())); // does not work
-//      return copyOf(transform(col, fromFuture())); // does not work
+	public static <A> Collection<A> getAll(Collection<Future<A>> coll) {
+        return copyOf(transform(coll, Collections3.<A>fromFuture()));
+//      return copyOf(transform(coll, Collections3.fromFuture())); // does not work
+//      return copyOf(transform(coll, fromFuture())); // does not work
 	}
     // @END_VERSION PARALLEL_TRANSFORM
 
