@@ -4,14 +4,13 @@ Introduction
 ------------
 This lab is about Functional Programming in Java, using mainly Google Collections. The purpose is to build a little utility that shows a histogram graph of the number of occurrences of each word in a text file. Like this:
 
-	% java ...WordGraph "README.md"
-	etc            #
-	particular     #
+	% java ...WordGraph "mary.txt"
+	fleece     #
+	but        #
 	...
-	lab            #############
-	step           ################
-	a              #########################
-	the            #############################
+	lamb       ############
+	mary       #############
+	the        ##############
 
 In the process, you will learn about map, filter and reduce, or as they are called in Google Collections: transform, filter, and ... well, there is no reduce in Google Collections. There is no parallel transform either. Let's implement those first, before we get into the wordgraph business.
 
