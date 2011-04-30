@@ -20,6 +20,14 @@ public class Collections3 {
 	private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
 	private static long timeout = 1000*60;
 
+    public static void setExecutorService(ExecutorService executorService) {
+        threadPool = executorService;
+    }
+
+    public static void setTimeout(long l) {
+        timeout = l;
+    }
+
 	public static <F,T> Function<F, Future<T>> toBackgroundFunction(final Function<F, T> function) {
 		return new Function<F, Future<T>>() {
 			public Future<T> apply(final F from) {
@@ -40,10 +48,6 @@ public class Collections3 {
     // @END_VERSION BACKGROUND_TRANSFORM
 
     // @BEGIN_VERSION FROM_FUTURE_FUNCTION
-    public static void setTimeout(long l) {
-        timeout = l;
-    }
-
     public static <A> Function<Future<A>, A> fromFuture() {
         return new Function<Future<A>, A>() {
             public A apply(Future<A> from) {

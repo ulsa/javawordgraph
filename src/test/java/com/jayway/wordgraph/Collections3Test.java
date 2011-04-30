@@ -2,7 +2,6 @@ package com.jayway.wordgraph;
 
 // @BEGIN_VERSION FOLD
 import static com.jayway.wordgraph.Collections3.fold;
-
 // @END_VERSION FOLD
 // @BEGIN_VERSION REDUCE
 import static com.jayway.wordgraph.Collections3.reduce;
@@ -11,6 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
@@ -22,10 +22,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.hamcrest.Matcher;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import com.google.common.base.Function;
@@ -50,6 +54,12 @@ public class Collections3Test {
         }
     };
     
+    @Before
+    public void setupStaticFields() {
+        Collections3.setTimeout(1000*60);
+        Collections3.setExecutorService(Executors.newFixedThreadPool(10));
+    }
+
     @Test
     public void backgroundFunctionShouldHaveSameResult() throws Exception {
         String expected = "hello";
@@ -64,6 +74,15 @@ public class Collections3Test {
         long after = System.currentTimeMillis();
         assertThat(after-before, lessThan(50L));
         assertThat(future.get(2, TimeUnit.SECONDS), equalTo(2));
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Test
+    public void toBackgroundFunctionUsesGivenExecutorService() throws Exception {
+        ExecutorService mockExecutorService = mock(ExecutorService.class);
+        Collections3.setExecutorService(mockExecutorService);
+        Collections3.toBackgroundFunction(Functions.identity()).apply("whatever");
+        verify(mockExecutorService).submit(Mockito.any(Callable.class));
     }
     // @END_VERSION TO_BACKGROUND_FUNCTION
     
@@ -111,10 +130,10 @@ public class Collections3Test {
 
     // @END_VERSION FROM_FUTURE_FUNCTION
 
-    @SuppressWarnings("unchecked")
     // @BEGIN_VERSION GET_ALL
+    @SuppressWarnings("unchecked")
     @Test
-    public void getAllOnCollectionOfFuturesShould() throws Exception {
+    public void getAllOnCollectionOfFuturesShouldGetTheFuturesResults() throws Exception {
         Future<Object> future = mock(Future.class);
         Object expected = Collections.singletonList(5);
         when(future.get(anyLong(), (TimeUnit)anyObject())).thenReturn(5);
@@ -169,6 +188,22 @@ public class Collections3Test {
         //         6*4=24 
         assertThat(reduce(times, Arrays.asList(1, 2, 3, 4)), is(24));
     }
+
+    @Test
+    public void reduceWithEmptyCollectionThrowsException() {
+        try {
+            reduce(null, Collections.emptyList());
+            fail("IllegalArgumentException expected");
+        } catch (IllegalArgumentException expected) {
+            // expected
+        }
+    }
+
+    @Test
+    public void reduceWithOneElementReturnsThatElement() {
+        String result = reduce(null, Collections.singletonList("whatever"));
+        assertThat(result, is("whatever"));
+    }
     // @END_VERSION REDUCE
 
     // @BEGIN_VERSION FOLD
@@ -198,6 +233,11 @@ public class Collections3Test {
         };
         Deque<Integer> expected = new LinkedList<Integer>(Arrays.asList(3, 2, 1));
         assertThat(fold(reverse, new LinkedList<Integer>(), Arrays.asList(1, 2, 3)), is(expected));
+    }
+    
+    @Test
+    public void foldWithEmptyCollectionsReturnsInitialValue() {
+        assertThat(fold(null, "some init value", Collections.emptyList()), is("some init value"));
     }
     // @END_VERSION FOLD
 

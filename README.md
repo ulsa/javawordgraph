@@ -56,10 +56,16 @@ Step: From Future Function
 Now you need to get the result of the background calculation. Write a Function that turns a Future<A> back into an A.
 // @END_VERSION FROM_FUTURE_FUNCTION
 
+// @BEGIN_VERSION GET_ALL
+Step: Get All
+--------------------------
+Apply the fromFuture function to a collection of Futures. Do a transform, but consider the consequences of laziness.
+// @END_VERSION GET_ALL
+
 // @BEGIN_VERSION REGULAR_TRANSFORM
 Step: Regular Transform
 -----------------------
-This step has a test that illustrates the problem with regular transform when we want to apply a function that takes a significant amount of time. Just run the test and watch it fail. Ponder for a moment what can be done about it, but then move on to the next step.
+This step has a test that illustrates the problem with regular transform with a function that takes a significant amount of time. Just run the test and watch it fail. Ponder for a moment what can be done about it, but then move on to the next step.
 
 	mvn lab:next
 	
@@ -68,7 +74,7 @@ This step has a test that illustrates the problem with regular transform when we
 // @BEGIN_VERSION PARALLEL_TRANSFORM
 Step: Parallel Transform
 ------------------------
-In this step, the test has been modified to use a parallel version of transform. You have to implement it.
+In this step, the test has been modified to use a parallel version of transform. Stitch together the building blocks you have.
 // @END_VERSION PARALLEL_TRANSFORM
 
 // @BEGIN_VERSION REDUCE

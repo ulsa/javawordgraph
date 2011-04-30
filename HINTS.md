@@ -5,19 +5,19 @@ Reload this file after moving to the next step, for further hints.
 // @BEGIN_VERSION_ONLY TO_BACKGROUND_FUNCTION
 Step: To Background Function
 ----------------------------
-Look into java.util.concurrent.ExecutorService.submit.
+Look into java.util.concurrent.ExecutorService.submit. Create a Function that creates a Callable that performs whatever the original Function does.
 // @END_VERSION_ONLY TO_BACKGROUND_FUNCTION
 
 // @BEGIN_VERSION_ONLY BACKGROUND_TRANSFORM
 Step: Background Transform
 --------------------------
-Look into ImmutableList.copyOf.
+Apply the background function you just implemented in a transform. The resulting collection is lazy. Look into ImmutableList.copyOf to go non-lazy.
 // @END_VERSION_ONLY BACKGROUND_TRANSFORM
 
 // @BEGIN_VERSION_ONLY FROM_FUTURE_FUNCTION
 Step: From Future Function
 --------------------------
-No hints yet.
+Do you 'get' it?
 // @END_VERSION_ONLY FROM_FUTURE_FUNCTION
 
 // @BEGIN_VERSION_ONLY REGULAR_TRANSFORM
@@ -26,29 +26,31 @@ Step: Regular Transform
 Nothing to do in this step, just run the test.
 // @END_VERSION_ONLY REGULAR_TRANSFORM
 
-// @BEGIN_VERSION_ONLY PARALLEL_TRANSFORM
-Step: Parallel Transform
-------------------------
-Transform the collection into a collection of Futures. Transform that back into a collection. It's lazy, so you must copy the result into something. An immutable something perhaps?
-
+// @BEGIN_VERSION_ONLY GET_ALL
 Note Java's crappy type inference:
 	return copyOf(transform(coll, Collections3.fromFuture())); // does not work
 	return copyOf(transform(coll, fromFuture())); // does not work
 
-You must write:
+You must write something like:
 	return copyOf(transform(coll, Collections3.<A>fromFuture()));
+// @END_VERSION_ONLY GET_ALL
+
+// @BEGIN_VERSION_ONLY PARALLEL_TRANSFORM
+Step: Parallel Transform
+------------------------
+Get all the results that have been transformed in the background.
 // @END_VERSION_ONLY PARALLEL_TRANSFORM
 
 // @BEGIN_VERSION_ONLY REDUCE
 Step: Reduce
 ------------
-No hints yet.
+Use an iterator to check if no values, to get the first value, etc.
 // @END_VERSION_ONLY REDUCE
 
 // @BEGIN_VERSION_ONLY FOLD
 Step: Fold
 ----------
-No hints yet.
+Vanilla foreach.
 // @END_VERSION_ONLY FOLD
 	
 // @BEGIN_VERSION_ONLY GATHER_WORDS_WHITESPACE
