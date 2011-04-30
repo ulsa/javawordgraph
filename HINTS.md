@@ -1,17 +1,20 @@
-This file contains hints that don't give you the solution, but point you in the right direction.
+This file contains hints that don't give you the solution, but point you in the
+right direction.
 
 Reload this file after moving to the next step, for further hints.
 
 // @BEGIN_VERSION_ONLY TO_BACKGROUND_FUNCTION
 Step: To Background Function
 ----------------------------
-Look into java.util.concurrent.ExecutorService.submit. Create a Function that creates a Callable that performs whatever the original Function does.
+Look into java.util.concurrent.ExecutorService.submit. Create a Function that
+creates a Callable that performs whatever the original Function does.
 // @END_VERSION_ONLY TO_BACKGROUND_FUNCTION
 
 // @BEGIN_VERSION_ONLY BACKGROUND_TRANSFORM
 Step: Background Transform
 --------------------------
-Apply the background function you just implemented in a transform. The resulting collection is lazy. Look into ImmutableList.copyOf to go non-lazy.
+Apply the background function you just implemented in a transform. The resulting
+collection is lazy. Look into ImmutableList.copyOf to go non-lazy.
 // @END_VERSION_ONLY BACKGROUND_TRANSFORM
 
 // @BEGIN_VERSION_ONLY FROM_FUTURE_FUNCTION
