@@ -13,7 +13,7 @@ This lab is about Functional Programming in Java, using mainly Google Collection
 	a              #########################
 	the            #############################
 
-In the process, you will learn about map, filter and reduce, or as they are called in Google Collections: transform, filter, and ... well, there is no reduce in Google Collections. Hmmm. What shall we do about that?
+In the process, you will learn about map, filter and reduce, or as they are called in Google Collections: transform, filter, and ... well, there is no reduce in Google Collections. There is no parallel transform either. Let's implement those first, before we get into the wordgraph business.
 
 Quick Start
 -----------
@@ -41,13 +41,13 @@ Check src/solution/java for a solution.
 // @BEGIN_VERSION TO_BACKGROUND_FUNCTION
 Step: To Background Function
 ----------------------------
-Write a Function that turns an F into a Future<T>.
+The first step towards a parallel transform. Write a Function that turns an F into a Future<T>.
 // @END_VERSION TO_BACKGROUND_FUNCTION
 
 // @BEGIN_VERSION BACKGROUND_TRANSFORM
 Step: Background Transform
 --------------------------
-Do the transform, but consider the consequences of laziness.
+Another step towards a parallel transform. Transform a collection in the background. Consider the consequences of laziness.
 // @END_VERSION BACKGROUND_TRANSFORM
 
 // @BEGIN_VERSION FROM_FUTURE_FUNCTION
@@ -58,7 +58,7 @@ Now you need to get the result of the background calculation. Write a Function t
 
 // @BEGIN_VERSION GET_ALL
 Step: Get All
---------------------------
+-------------
 Apply the fromFuture function to a collection of Futures. Do a transform, but consider the consequences of laziness.
 // @END_VERSION GET_ALL
 
@@ -84,13 +84,13 @@ Google Collections has map and filter, but no reduce. In this step, you will imp
 
 Reduce takes a function f, and a collection coll. f should be a function of 2 arguments. Reduce returns the result of applying f to the first item in coll and the 2nd item, then applying f to that result and the 3rd item, etc.
 
-Here is an interface for the function that reduce takes:
+Here is an interface for the function f:
 
     public interface Function2<A1, A2, R> {
         public R apply(A1 accum, A2 next);
     }
 
-Here is a skeleton for the reduce function:
+Here is a skeleton for reduce:
 
     public class Collections3 {
         public static <A> A reduce(Function2<A, A, A> f, A initial, Iterable<A> coll) {
@@ -113,9 +113,9 @@ Step: Fold
 ----------
 Google Collections doesn't have a fold either. In this step, you will implement fold.
 
-Fold takes an initial value, but reduce doesn't. Fold takes a function f, an initial value val, and a collection coll. f should be a function of 2 arguments. Reduce returns the result of applying f to val and the first item in coll, then applying f to that result and the 2nd item, etc.
+Fold takes an initial value, but reduce doesn't. Fold takes a function f, an initial value val, and a collection coll. f should be a function of 2 arguments. Fold returns the result of applying f to val and the first item in coll, then applying f to that result and the 2nd item, etc.
 
-Here is a skeleton for the fold function:
+Here is a skeleton for fold:
 
     public class Collections3 {
         public static <A,B> A fold(Function2<A, B, A> f, A initial, Iterable<B> coll) {
@@ -138,9 +138,9 @@ Note the initial value 2.
 // @BEGIN_VERSION GATHER_WORDS_WHITESPACE
 Step Gather Words, Whitespace
 -----------------------------
-Back to the real business problem. In the test method comments, you can see the Clojure equivalents of the tests. I have added them there because I think that they are more readable than the Java test code, and that they convey the essence of the tests quite clearly.
+Back to the real business problem. In the test method comments, you can see the Clojure equivalents of the tests. I have added them there because I think that they convey the essence of the tests quite clearly.
 
-Write a function that extracts words from a string, splitting words on whitespace. Note that there is a main method that you can run on any text file of choice, like this README.md file for example.
+Write a function that extracts words from a string, splitting words on whitespace. Note that there is a main method that you can run on any text file of choice, like for example the file mary.txt in the project root.
 // @END_VERSION GATHER_WORDS_WHITESPACE
 
 // @BEGIN_VERSION GATHER_WORDS_PUNCTUATION

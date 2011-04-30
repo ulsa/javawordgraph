@@ -1,4 +1,4 @@
-This file contains hints that don't give you the solution, but points you in the right direction.
+This file contains hints that don't give you the solution, but point you in the right direction.
 
 Reload this file after moving to the next step, for further hints.
 
@@ -27,6 +27,8 @@ Nothing to do in this step, just run the test.
 // @END_VERSION_ONLY REGULAR_TRANSFORM
 
 // @BEGIN_VERSION_ONLY GET_ALL
+Step: Get All
+-------------
 Note Java's crappy type inference:
 	return copyOf(transform(coll, Collections3.fromFuture())); // does not work
 	return copyOf(transform(coll, fromFuture())); // does not work
@@ -74,9 +76,25 @@ No hints yet.
 // @BEGIN_VERSION_ONLY COUNT_WORDS
 Step Count Words
 ----------------
-(reduce (fn [counts x]
-          (assoc counts x (inc (get counts x 0))))
-        coll))
+This is the pseudo-code for counting stuff in a collection:
+
+    (fold (function [counts x]
+      	        (assoc counts x (inc (get counts x 0))))
+          {}
+          coll))
+
+'counts' is a Map that accumulates the counts.
+'x' will be each element in 'coll'.
+{} is an empty Map used as the initial value.
+
+Get the value of x from the Map counts, or zero if no x in counts:
+	(get counts x 0)
+
+Increase it by one:
+	(inc (get counts x 0))
+
+Associate to the key 'x', in the Map 'counts', the above number as the value:
+    (assoc counts x (inc (get counts x 0)))
 // @END_VERSION_ONLY COUNT_WORDS
 
 // @BEGIN_VERSION_ONLY SORT_COUNTED_WORDS
