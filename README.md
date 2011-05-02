@@ -1,6 +1,11 @@
 This program, wordgraph, will read a text file, count word occurrences and produce
 a histogram of the results.
 
+Pre-requisites
+--------------
+Java JDK 5+ [download here](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+Maven 2+ [download here](http://maven.apache.org/download.html)
+
 Introduction
 ------------
 This lab is about Functional Programming in Java, using mainly Google Collections.
