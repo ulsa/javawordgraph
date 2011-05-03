@@ -132,7 +132,7 @@ public class WordGraph {
                 return accum;
             }
         };
-        return fold(count, new HashMap<String, Integer>(), words);
+        return fold(words, new HashMap<String, Integer>(), count);
     }
     // @END_VERSION COUNT_WORDS
 

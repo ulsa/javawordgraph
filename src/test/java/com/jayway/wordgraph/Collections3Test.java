@@ -173,7 +173,7 @@ public class Collections3Test {
         // 1+2=3
         //     3+3=6
         //         6+4=10 
-        assertThat(reduce(plus, Arrays.asList(1, 2, 3, 4)), is(10));
+        assertThat(reduce(Arrays.asList(1, 2, 3, 4), plus), is(10));
     }
 
     @Test
@@ -186,13 +186,13 @@ public class Collections3Test {
         // 1*2=2
         //     2*3=6
         //         6*4=24 
-        assertThat(reduce(times, Arrays.asList(1, 2, 3, 4)), is(24));
+        assertThat(reduce(Arrays.asList(1, 2, 3, 4), times), is(24));
     }
 
     @Test
     public void reduceWithEmptyCollectionThrowsException() {
         try {
-            reduce(null, Collections.emptyList());
+            reduce(Collections.emptyList(), null);
             fail("IllegalArgumentException expected");
         } catch (IllegalArgumentException expected) {
             // expected
@@ -201,7 +201,7 @@ public class Collections3Test {
 
     @Test
     public void reduceWithOneElementReturnsThatElement() {
-        String result = reduce(null, Collections.singletonList("whatever"));
+        String result = reduce(Collections.singletonList("whatever"), null);
         assertThat(result, is("whatever"));
     }
     // @END_VERSION REDUCE
@@ -219,7 +219,7 @@ public class Collections3Test {
         //     2*2=4
         //         4*3=12
         //             12*4=48
-        assertThat(fold(times, 2, Arrays.asList(1, 2, 3, 4)), is(48));
+        assertThat(fold(Arrays.asList(1, 2, 3, 4), 2, times), is(48));
     }
     
     @Test
@@ -232,12 +232,12 @@ public class Collections3Test {
             }
         };
         Deque<Integer> expected = new LinkedList<Integer>(Arrays.asList(3, 2, 1));
-        assertThat(fold(reverse, new LinkedList<Integer>(), Arrays.asList(1, 2, 3)), is(expected));
+        assertThat(fold(Arrays.asList(1, 2, 3), new LinkedList<Integer>(), reverse), is(expected));
     }
     
     @Test
     public void foldWithEmptyCollectionsReturnsInitialValue() {
-        assertThat(fold(null, "some init value", Collections.emptyList()), is("some init value"));
+        assertThat(fold(Collections.emptyList(), "some init value", null), is("some init value"));
     }
     // @END_VERSION FOLD
 

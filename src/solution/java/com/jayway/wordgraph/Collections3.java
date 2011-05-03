@@ -76,7 +76,7 @@ public class Collections3 {
     // @END_VERSION PARALLEL_TRANSFORM
 
     // @BEGIN_VERSION REDUCE
-    public static <A> A reduce(Function2<A, A, A> f, Iterable<A> coll) {
+    public static <A> A reduce(Iterable<A> coll, Function2<A, A, A> f) {
         Iterator<A> iterator = coll.iterator();
         if (!iterator.hasNext()) {
             throw new IllegalArgumentException("coll is not allowed to be empty");
@@ -91,7 +91,7 @@ public class Collections3 {
     // @END_VERSION REDUCE
 
     // @BEGIN_VERSION FOLD
-    public static <A, B> A fold(Function2<A, B, A> f, A val, Iterable<B> coll) {
+    public static <A, B> A fold(Iterable<B> coll, A val, Function2<A, B, A> f) {
         A result = val;
         for (B next : coll) {
             result = f.apply(result, next);
