@@ -76,7 +76,7 @@ public class Collections3 {
     // @END_VERSION PARALLEL_TRANSFORM
 
     // @BEGIN_VERSION REDUCE
-    public static <A> A reduce(Iterable<A> coll, Function2<A, A, A> f) {
+    public static <A> A reduce(Iterable<A> coll, Function2<? super A, ? super A, ? extends A> f) {
         Iterator<A> iterator = coll.iterator();
         if (!iterator.hasNext()) {
             throw new IllegalArgumentException("coll is not allowed to be empty");
