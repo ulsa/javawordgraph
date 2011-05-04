@@ -56,8 +56,8 @@ public class Collections3Test {
 
     @Test
     public void backgroundFunctionShouldHaveSameResult() throws Exception {
-        String expected = "hello";
-        Future<String> future = Collections3.toBackgroundFunction(Functions.constant(expected)).apply("world");
+        String expected = "world";
+        Future<String> future = Collections3.toBackgroundFunction(Functions.constant(expected)).apply("hello");
         assertThat(future.get(1, TimeUnit.SECONDS), equalTo(expected));
     }
     

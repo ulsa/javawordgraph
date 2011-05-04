@@ -28,12 +28,12 @@ public class Collections3 {
         timeout = l;
     }
 
-	public static <F,T> Function<F, Future<T>> toBackgroundFunction(final Function<F, T> function) {
+	public static <F,T> Function<F, Future<T>> toBackgroundFunction(final Function<F, T> f) {
 		return new Function<F, Future<T>>() {
 			public Future<T> apply(final F from) {
 				return threadPool.submit(new Callable<T>() {
 					public T call() throws Exception {
-						return function.apply(from);
+						return f.apply(from);
 					}
 				});
 			}
@@ -42,8 +42,8 @@ public class Collections3 {
     // @END_VERSION TO_BACKGROUND_FUNCTION
 
 	// @BEGIN_VERSION BACKGROUND_TRANSFORM
-    public static <F,T> Collection<Future<T>> transformInBackground(Collection<F> fromCollection, Function<F, T> function) {
-        return copyOf(transform(fromCollection, toBackgroundFunction(function)));
+    public static <F,T> Collection<Future<T>> transformInBackground(Collection<F> fromCollection, Function<F, T> f) {
+        return copyOf(transform(fromCollection, toBackgroundFunction(f)));
     }
     // @END_VERSION BACKGROUND_TRANSFORM
 
@@ -70,8 +70,8 @@ public class Collections3 {
     // @END_VERSION GET_ALL
 
     // @BEGIN_VERSION PARALLEL_TRANSFORM
-	public static <F,T> Collection<T> parallelTransform(Collection<F> fromCollection, Function<F, T> function) {
-		return getAll(transformInBackground(fromCollection, function));
+	public static <F,T> Collection<T> parallelTransform(Collection<F> fromCollection, Function<F, T> f) {
+		return getAll(transformInBackground(fromCollection, f));
     }
     // @END_VERSION PARALLEL_TRANSFORM
 

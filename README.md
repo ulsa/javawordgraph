@@ -52,36 +52,49 @@ Check HINTS.md file for hints.
 Check src/solution/java for a solution.
 
 // @BEGIN_VERSION TO_BACKGROUND_FUNCTION
-Step: To Background Function
-----------------------------
-The first step towards a parallel transform. Write a Function that turns an F
-into a Future<T>.
+To Background Function
+----------------------
+We're building a parallel version of transform. The idea is this: transform
+already applies a Function f to all elements in a collection. So if we can
+present a Function that takes f and executes it on a background thread, then
+we can simply call transform with that new function. The new function will be
+applied to each element in the collection, and execute f on the element but
+do it in the background.
+
+The first step towards a parallel transform is to write a Function that turns
+an F into a Future<T>.
 // @END_VERSION TO_BACKGROUND_FUNCTION
 
 // @BEGIN_VERSION BACKGROUND_TRANSFORM
-Step: Background Transform
---------------------------
-Another step towards a parallel transform. Transform a collection in the
-background. Consider the consequences of laziness.
+Background Transform
+--------------------
+OK, so the previous step produced a method that gives us a function that does
+whatever f does, but in the background. 
+
+The second step towards a parallel transform is to execute transform with a
+collection and your new background function. However, you should consider the
+consequences of laziness.
 // @END_VERSION BACKGROUND_TRANSFORM
 
 // @BEGIN_VERSION FROM_FUTURE_FUNCTION
-Step: From Future Function
---------------------------
-Now you need to get the result of the background calculation. Write a Function
-that turns a Future<A> back into an A.
+From Future Function
+--------------------
+The previous step actually runs Function f in the background for all elements
+in the collection. Now you need to get the result of the background calculation.
+Start by writing a Function that turns a Future<A> back into an A.
 // @END_VERSION FROM_FUTURE_FUNCTION
 
 // @BEGIN_VERSION GET_ALL
-Step: Get All
--------------
-Apply the fromFuture function to a collection of Futures. Do a transform, but
-consider the consequences of laziness.
+Get All
+-------
+Apply the fromFuture function that you wrote in the previous step to a
+collection of Futures. It's a regular transform, but again you should consider
+the consequences of laziness.
 // @END_VERSION GET_ALL
 
 // @BEGIN_VERSION REGULAR_TRANSFORM
-Step: Regular Transform
------------------------
+Regular Transform
+-----------------
 This step has a test that illustrates the problem with regular transform with a
 function that takes a significant amount of time. Just run the test and watch
 it fail. Ponder for a moment what can be done about it, but then move on to the
@@ -92,32 +105,32 @@ next step.
 // @END_VERSION REGULAR_TRANSFORM
 
 // @BEGIN_VERSION PARALLEL_TRANSFORM
-Step: Parallel Transform
-------------------------
+Parallel Transform
+------------------
 In this step, the test has been modified to use a parallel version of transform.
-Stitch together the building blocks you have.
+Stitch together the two larger building blocks you have produced so far.
 // @END_VERSION PARALLEL_TRANSFORM
 
 // @BEGIN_VERSION REDUCE
-Step: Reduce
-------------
+Reduce
+------
 Google Collections has map and filter, but no reduce. In this step, you will
 implement reduce.
 
-Reduce takes a function f, and a collection coll. f should be a function of 2
+Reduce takes a collection coll, and a function f. f is a function of 2
 arguments. Reduce returns the result of applying f to the first item in coll
 and the 2nd item, then applying f to that result and the 3rd item, etc.
 
 Here is an interface for the function f:
 
     public interface Function2<A1, A2, R> {
-        public R apply(A1 accum, A2 next);
+        public R apply(A1 a1, A2 a2);
     }
 
 Here is a skeleton for reduce:
 
     public class Collections3 {
-        public static <A> A reduce(Function2<A, A, A> f, A initial, Iterable<A> coll) {
+        public static <A> A reduce(Iterable<A> coll, Function2<A, A, A> f) {
     	    ...
         }
     }
@@ -129,24 +142,24 @@ Here is an example of using reduce:
             return accum + next;
         }
     };
-    Collections3.reduce(plus, Arrays.asList(1, 2, 3, 4))
+    Collections3.reduce(Arrays.asList(1, 2, 3, 4), plus);
 // @END_VERSION REDUCE
 
 // @BEGIN_VERSION FOLD
-Step: Fold
-----------
+Fold
+----
 Google Collections doesn't have a fold either. In this step, you will implement
 fold.
 
-Fold takes an initial value, but reduce doesn't. Fold takes a function f, an
-initial value val, and a collection coll. f should be a function of 2 arguments.
-Fold returns the result of applying f to val and the first item in coll, then
+Fold takes an initial value, but reduce doesn't. Fold takes a collection coll,
+an initial value val, and a function f. f is a function of 2 arguments. Fold
+returns the result of applying f to val and the first item in coll, then
 applying f to that result and the 2nd item, etc.
 
 Here is a skeleton for fold:
 
     public class Collections3 {
-        public static <A,B> A fold(Function2<A, B, A> f, A initial, Iterable<B> coll) {
+        public static <A,B> A fold(Iterable<B> coll, A val, Function2<A, B, A> f) {
     	    ...
         }
     }
@@ -159,14 +172,14 @@ may be of a different type than 'accum'. Here is an example of using fold:
 	        return accum * next;
 	    }
 	};
-    Collections3.fold(times, 2, Arrays.asList(1, 2, 3, 4))
+    Collections3.fold(Arrays.asList(1, 2, 3, 4), 2, times);
 
 Note the initial value 2.
 // @END_VERSION FOLD
 	
 // @BEGIN_VERSION GATHER_WORDS_WHITESPACE
-Step Gather Words, Whitespace
------------------------------
+Gather Words, Whitespace
+------------------------
 Back to the real business problem. In the test method comments, you can see
 the Clojure equivalents of the tests. I have added them there because I think
 that they convey the essence of the tests quite clearly.
@@ -177,28 +190,28 @@ of choice, like for example the file mary.txt in the project root.
 // @END_VERSION GATHER_WORDS_WHITESPACE
 
 // @BEGIN_VERSION GATHER_WORDS_PUNCTUATION
-Step Gather Words, Remove Punctuation
--------------------------------------
+Gather Words, Remove Punctuation
+--------------------------------
 Remove not only whitespace, but also any punctuation. Run main and watch the
 output.
 // @END_VERSION GATHER_WORDS_PUNCTUATION
 
 // @BEGIN_VERSION GATHER_WORDS_LOWERCASE
-Step Gather Words, Ignore Case
-------------------------------
+Gather Words, Ignore Case
+-------------------------
 Ignore the case of the words by converting them to lowercase. Run main.
 // @END_VERSION GATHER_WORDS_LOWERCASE
 
 // @BEGIN_VERSION COUNT_WORDS
-Step Count Words
-----------------
+Count Words
+-----------
 Count the words into a map from words to count. Perhaps you'll get some use of
 that fold implementation now?
 // @END_VERSION COUNT_WORDS
 
 // @BEGIN_VERSION SORT_COUNTED_WORDS
-Step Sort Counted Words
------------------------
+Sort Counted Words
+------------------
 Sort the map by count and return a list of word/count pairs. What's the simplest
 implementation of a pair? I don't know, but we chose Map, so that's what you'll
 use. It might look funny with a Collection of Map from String to Integer, but
@@ -206,28 +219,28 @@ remember that the Map is only representing a key-value pair.
 // @END_VERSION SORT_COUNTED_WORDS
 
 // @BEGIN_VERSION REPEAT_STR
-Step Repeat String
-------------------
+Repeat String
+-------------
 Repeat a string a given number of times. Like 'repeatStr "#" 3' becomes "###".
 // @END_VERSION REPEAT_STR
 
 // @BEGIN_VERSION HISTOGRAM_ENTRY
-Step Histogram Entry
---------------------
+Histogram Entry
+---------------
 Produce a single entry in the histogram. Calling histogramEntry with a word-count
 pair of ["betty" 6] and a width of 7 should return the word "betty" left-justified
 within a field of 7 characters, a blank, and then six hashes: "betty   ######".
 // @END_VERSION HISTOGRAM_ENTRY
 
 // @BEGIN_VERSION HISTOGRAM
-Step Histogram
---------------
+Histogram
+---------
 Produce a complete histogram. It's just a bunch of histogram entries.
 // @END_VERSION HISTOGRAM
 
 // @BEGIN_VERSION DESIGN_QUESTIONS
-Step Design Questions
----------------------
+Design Questions
+----------------
 The lab is now complete, but here are some questions that you should consider:
 * Why are we using a static function rather than a field to create the function
   fromFuture? Could it be done differently? Pros and cons?
