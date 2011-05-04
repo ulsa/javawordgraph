@@ -4,9 +4,9 @@ package com.jayway.wordgraph;
 import static com.google.common.collect.Collections2.filter;
 import static com.google.common.collect.Collections2.transform;
 import static com.google.common.collect.Lists.newLinkedList;
-//@BEGIN_VERSION FOLD
+// @BEGIN_VERSION FOLD
 import static com.jayway.wordgraph.Collections3.fold;
-//@END_VERSION FOLD
+// @END_VERSION FOLD
 import static java.util.Collections.max;
 import static java.util.Collections.singletonMap;
 import static java.util.Collections.sort;
@@ -88,6 +88,12 @@ public class WordGraph {
         // @BEGIN_VERSION_ONLY SORT_COUNTED_WORDS
         System.out.println(sortCountedWords(countWords(gatherWords(FileUtils.readFileToString(new File(args[0]))))));
         // @END_VERSION_ONLY SORT_COUNTED_WORDS
+        // @BEGIN_VERSION_ONLY REPEAT_STR
+        System.out.println(sortCountedWords(countWords(gatherWords(FileUtils.readFileToString(new File(args[0]))))));
+        // @END_VERSION_ONLY REPEAT_STR
+        // @BEGIN_VERSION_ONLY HISTOGRAM_ENTRY
+        System.out.println(sortCountedWords(countWords(gatherWords(FileUtils.readFileToString(new File(args[0]))))));
+        // @END_VERSION_ONLY HISTOGRAM_ENTRY
         // @BEGIN_VERSION HISTOGRAM
         System.out.println(histogram(sortCountedWords(countWords(gatherWords(FileUtils.readFileToString(new File(
                 args[0])))))));

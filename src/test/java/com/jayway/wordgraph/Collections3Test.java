@@ -1,11 +1,5 @@
 package com.jayway.wordgraph;
 
-// @BEGIN_VERSION FOLD
-import static com.jayway.wordgraph.Collections3.fold;
-// @END_VERSION FOLD
-// @BEGIN_VERSION REDUCE
-import static com.jayway.wordgraph.Collections3.reduce;
-// @END_VERSION REDUCE
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -173,7 +167,7 @@ public class Collections3Test {
         // 1+2=3
         //     3+3=6
         //         6+4=10 
-        assertThat(reduce(Arrays.asList(1, 2, 3, 4), plus), is(10));
+        assertThat(Collections3.reduce(Arrays.asList(1, 2, 3, 4), plus), is(10));
     }
 
     @Test
@@ -186,13 +180,13 @@ public class Collections3Test {
         // 1*2=2
         //     2*3=6
         //         6*4=24 
-        assertThat(reduce(Arrays.asList(1, 2, 3, 4), times), is(24));
+        assertThat(Collections3.reduce(Arrays.asList(1, 2, 3, 4), times), is(24));
     }
 
     @Test
     public void reduceWithEmptyCollectionThrowsException() {
         try {
-            reduce(Collections.emptyList(), null);
+            Collections3.reduce(Collections.emptyList(), null);
             fail("IllegalArgumentException expected");
         } catch (IllegalArgumentException expected) {
             // expected
@@ -201,7 +195,7 @@ public class Collections3Test {
 
     @Test
     public void reduceWithOneElementReturnsThatElement() {
-        String result = reduce(Collections.singletonList("whatever"), null);
+        String result = Collections3.reduce(Collections.singletonList("whatever"), null);
         assertThat(result, is("whatever"));
     }
     // @END_VERSION REDUCE
@@ -219,7 +213,7 @@ public class Collections3Test {
         //     2*2=4
         //         4*3=12
         //             12*4=48
-        assertThat(fold(Arrays.asList(1, 2, 3, 4), 2, times), is(48));
+        assertThat(Collections3.fold(Arrays.asList(1, 2, 3, 4), 2, times), is(48));
     }
     
     @Test
@@ -232,12 +226,12 @@ public class Collections3Test {
             }
         };
         Deque<Integer> expected = new LinkedList<Integer>(Arrays.asList(3, 2, 1));
-        assertThat(fold(Arrays.asList(1, 2, 3), new LinkedList<Integer>(), reverse), is(expected));
+        assertThat(Collections3.fold(Arrays.asList(1, 2, 3), new LinkedList<Integer>(), reverse), is(expected));
     }
     
     @Test
     public void foldWithEmptyCollectionsReturnsInitialValue() {
-        assertThat(fold(Collections.emptyList(), "some init value", null), is("some init value"));
+        assertThat(Collections3.fold(Collections.emptyList(), "some init value", null), is("some init value"));
     }
     // @END_VERSION FOLD
 
