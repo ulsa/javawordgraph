@@ -51,6 +51,12 @@ Reload this file after moving to the next step, for further instructions.
 Check HINTS.md file for hints.
 Check src/solution/java for a solution.
 
+// @BEGIN_VERSION HELLO_FUNCTION
+Hello Function
+--------------
+Write a Function that squares an Integer.
+// @END_VERSION HELLO_FUNCTION
+
 // @BEGIN_VERSION TO_BACKGROUND_FUNCTION
 To Background Function
 ----------------------

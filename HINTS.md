@@ -3,6 +3,12 @@ right direction.
 
 Reload this file after moving to the next step, for further hints.
 
+// @BEGIN_VERSION_ONLY HELLO_FUNCTION
+Hello Function
+--------------
+new Function<Integer, Integer>()
+// @END_VERSION_ONLY HELLO_FUNCTION
+
 // @BEGIN_VERSION_ONLY TO_BACKGROUND_FUNCTION
 To Background Function
 ----------------------
