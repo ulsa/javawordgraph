@@ -14,7 +14,9 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+// @BEGIN_VERSION FOLD
 import java.util.Deque;
+// @END_VERSION FOLD
 import java.util.LinkedList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
