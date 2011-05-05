@@ -6,6 +6,8 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
@@ -61,6 +63,14 @@ public class HelloTest {
     // @END_VERSION HELLO_FUNCTION
     
     // @BEGIN_VERSION HELLO_BINARY_FUNCTION
+
+    // This is only here to help you design the generic interface!
+    static class Function2TypeVerification implements Function2<String, Color, Point> {
+        public Point apply(String a1, Color a2) {
+            return null;
+        };
+    }
+
     @Test
     public void addFunctionShouldAddItsArguments() throws Exception {
         Integer expected = 19;
@@ -68,5 +78,6 @@ public class HelloTest {
         Integer result = add.apply(11, 8);
         assertThat(result, equalTo(expected));
     }
+    
     // @END_VERSION HELLO_BINARY_FUNCTION
 }
