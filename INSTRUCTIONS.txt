@@ -1,8 +1,26 @@
+// @BEGIN_VERSION HELLO_GENERICS
+Hello Generics
+--------------
+Write a static method that repeats its input n times.
+// @END_VERSION HELLO_GENERICS
+
+// @BEGIN_VERSION HELLO_GENERICS2
+Hello Generics2
+---------------
+Make your static method work for any type. Hello, Generics!
+// @END_VERSION HELLO_GENERICS2
+
 // @BEGIN_VERSION HELLO_FUNCTION
 Hello Function
 --------------
 Write a Function that squares an Integer.
 // @END_VERSION HELLO_FUNCTION
+
+// @BEGIN_VERSION HELLO_BINARY_FUNCTION
+Hello Binary Function
+---------------------
+Write a Function that adds two Integers.
+// @END_VERSION HELLO_BINARY_FUNCTION
 
 // @BEGIN_VERSION TO_BACKGROUND_FUNCTION
 To Background Function

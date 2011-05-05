@@ -3,11 +3,35 @@ right direction.
 
 Reload this file after moving to the next step, for further hints.
 
+// @BEGIN_VERSION HELLO_GENERICS
+Hello Generics
+--------------
+You're on your own here...
+// @END_VERSION HELLO_GENERICS
+
+// @BEGIN_VERSION HELLO_GENERICS2
+Hello Generics2
+---------------
+public static <T> Collection<T> repeat(T repeatThis, int times) {
+   ...
+}
+// @END_VERSION HELLO_GENERICS2
+
 // @BEGIN_VERSION_ONLY HELLO_FUNCTION
 Hello Function
 --------------
-new Function<Integer, Integer>()
+public static Function<Integer, Integer> square = new Function<Integer, Integer>() {
+   ...
+}
 // @END_VERSION_ONLY HELLO_FUNCTION
+
+// @BEGIN_VERSION HELLO_BINARY_FUNCTION
+Hello Binary Function
+---------------------
+public interface Function2<A1, A2, R> {
+    public R apply(A1 a1, A2 a2);
+}
+// @END_VERSION HELLO_BINARY_FUNCTION
 
 // @BEGIN_VERSION_ONLY TO_BACKGROUND_FUNCTION
 To Background Function
