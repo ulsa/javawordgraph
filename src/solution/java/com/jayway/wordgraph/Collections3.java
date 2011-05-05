@@ -38,7 +38,7 @@ public class Collections3 {
 				});
 			}
 		};
-	};
+	}
     // @END_VERSION TO_BACKGROUND_FUNCTION
 
 	// @BEGIN_VERSION BACKGROUND_TRANSFORM

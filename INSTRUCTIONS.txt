@@ -29,8 +29,12 @@ another function that is executed in the background.
 
 Given a Function<F, T> we need to turn this into a Function<F, Future<T>>
 
+public static <F,T> Function<F, Future<T>> toBackgroundFunction(final Function<F, T> f) {
+   ...
+}
+
 Details:
-We're building a parallel VERSION_ONLY of transform. The idea is this: transform
+We're building a parallel version of transform. The idea is this: transform
 already applies a Function f to all elements in a collection. So if we can
 present a Function that takes f and executes it on a background thread, then
 we can simply call transform with that new function. The new function will be
