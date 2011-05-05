@@ -25,8 +25,8 @@
 				<configuration>
 					<includes>
 						<include>src/**/*</include>
-						<include>README.md</include>
-						<include>HINTS.md</include>
+						<include>INSTRUCTIONS.txt</include>
+						<include>HINTS.txt</include>
 					</includes>
 				</configuration>
 			</plugin>
