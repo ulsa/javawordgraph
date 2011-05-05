@@ -25,6 +25,12 @@ Write a Function that adds two Integers.
 // @BEGIN_VERSION TO_BACKGROUND_FUNCTION
 To Background Function
 ----------------------
+The first step towards a parallel transform is to turn a function into
+another function that is executed in the background. 
+
+Given a Function<F, T> we need to turn this into a Function<F, Future<T>>
+
+Details:
 We're building a parallel version of transform. The idea is this: transform
 already applies a Function f to all elements in a collection. So if we can
 present a Function that takes f and executes it on a background thread, then
@@ -32,8 +38,6 @@ we can simply call transform with that new function. The new function will be
 applied to each element in the collection, and execute f on the element but
 do it in the background.
 
-The first step towards a parallel transform is to write a Function that turns
-an F into a Future<T>.
 // @END_VERSION TO_BACKGROUND_FUNCTION
 
 // @BEGIN_VERSION BACKGROUND_TRANSFORM
