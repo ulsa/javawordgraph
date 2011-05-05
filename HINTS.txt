@@ -3,18 +3,18 @@ right direction.
 
 Reload this file after moving to the next step, for further hints.
 
-// @BEGIN_VERSION HELLO_GENERICS
+// @BEGIN_VERSION_ONLY HELLO_GENERICS
 Hello Generics
 --------------
 You're on your own here...
-// @END_VERSION HELLO_GENERICS
-// @BEGIN_VERSION HELLO_GENERICS2
+// @END_VERSION_ONLY HELLO_GENERICS
+// @BEGIN_VERSION_ONLY HELLO_GENERICS2
 Hello Generics2
 ---------------
 public static <T> Collection<T> repeat(T repeatThis, int times) {
    ...
 }
-// @END_VERSION HELLO_GENERICS2
+// @END_VERSION_ONLY HELLO_GENERICS2
 // @BEGIN_VERSION_ONLY HELLO_FUNCTION
 Hello Function
 --------------
