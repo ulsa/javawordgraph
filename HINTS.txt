@@ -8,7 +8,6 @@ Hello Generics
 --------------
 You're on your own here...
 // @END_VERSION HELLO_GENERICS
-
 // @BEGIN_VERSION HELLO_GENERICS2
 Hello Generics2
 ---------------
@@ -16,7 +15,6 @@ public static <T> Collection<T> repeat(T repeatThis, int times) {
    ...
 }
 // @END_VERSION HELLO_GENERICS2
-
 // @BEGIN_VERSION_ONLY HELLO_FUNCTION
 Hello Function
 --------------
@@ -24,15 +22,13 @@ public static Function<Integer, Integer> square = new Function<Integer, Integer>
    ...
 }
 // @END_VERSION_ONLY HELLO_FUNCTION
-
-// @BEGIN_VERSION HELLO_BINARY_FUNCTION
+// @BEGIN_VERSION_ONLY HELLO_BINARY_FUNCTION
 Hello Binary Function
 ---------------------
 public interface Function2<A1, A2, R> {
     public R apply(A1 a1, A2 a2);
 }
-// @END_VERSION HELLO_BINARY_FUNCTION
-
+// @END_VERSION_ONLY HELLO_BINARY_FUNCTION
 // @BEGIN_VERSION_ONLY TO_BACKGROUND_FUNCTION
 To Background Function
 ----------------------
@@ -41,7 +37,6 @@ for java.util.concurrent.ExecutorService.submit. Create a new Function from F
 to Future<T> that submits to the ExecutorService a Callable<T> that applies
 the original Function<T> to the input of the new Function.
 // @END_VERSION_ONLY TO_BACKGROUND_FUNCTION
-
 // @BEGIN_VERSION_ONLY BACKGROUND_TRANSFORM
 Background Transform
 --------------------
@@ -49,13 +44,11 @@ Apply the background function you just implemented in a Collections2.transform.
 The resulting collection is lazy, which will create problems. Look into
 ImmutableList.copyOf to go non-lazy.
 // @END_VERSION_ONLY BACKGROUND_TRANSFORM
-
 // @BEGIN_VERSION_ONLY FROM_FUTURE_FUNCTION
 From Future Function
 --------------------
 Do you 'get' it?
 // @END_VERSION_ONLY FROM_FUTURE_FUNCTION
-
 // @BEGIN_VERSION_ONLY GET_ALL
 Get All
 -------
@@ -66,50 +59,42 @@ Note Java's crappy type inference:
 You must write something like:
 	return copyOf(transform(coll, Collections3.<A>fromFuture()));
 // @END_VERSION_ONLY GET_ALL
-
 // @BEGIN_VERSION_ONLY REGULAR_TRANSFORM
 Regular Transform
 -----------------
 Nothing to do in this step, just run the test and watch it fail.
 // @END_VERSION_ONLY REGULAR_TRANSFORM
-
 // @BEGIN_VERSION_ONLY PARALLEL_TRANSFORM
 Parallel Transform
 ------------------
 Get all the results that have been transformed in the background.
 Use your building blocks: transformInBackground and getAll.
 // @END_VERSION_ONLY PARALLEL_TRANSFORM
-
 // @BEGIN_VERSION_ONLY REDUCE
 Reduce
 ------
 Use an iterator to check if no values, to get the first value, etc.
 // @END_VERSION_ONLY REDUCE
-
 // @BEGIN_VERSION_ONLY FOLD
 Fold
 ----
 Vanilla foreach.
 // @END_VERSION_ONLY FOLD
-	
 // @BEGIN_VERSION_ONLY GATHER_WORDS_WHITESPACE
 Gather Words, Whitespace
 ------------------------
 No hints yet.
 // @END_VERSION_ONLY GATHER_WORDS_WHITESPACE
-
 // @BEGIN_VERSION_ONLY GATHER_WORDS_PUNCTUATION
 Gather Words, Remove Punctuation
 --------------------------------
 No hints yet.
 // @END_VERSION_ONLY GATHER_WORDS_PUNCTUATION
-
 // @BEGIN_VERSION_ONLY GATHER_WORDS_LOWERCASE
 Gather Words, Ignore Case
 -------------------------
 No hints yet.
 // @END_VERSION_ONLY GATHER_WORDS_LOWERCASE
-
 // @BEGIN_VERSION_ONLY COUNT_WORDS
 Count Words
 -----------
@@ -133,25 +118,21 @@ Increase it by one:
 Associate to the key 'x', in the Map 'counts', the above number as the value:
     (assoc counts x (inc (get counts x 0)))
 // @END_VERSION_ONLY COUNT_WORDS
-
 // @BEGIN_VERSION_ONLY SORT_COUNTED_WORDS
 Sort Counted Words
 ------------------
 Transform the Map to a collection of Maps, then sort.
 // @END_VERSION_ONLY SORT_COUNTED_WORDS
-
 // @BEGIN_VERSION_ONLY REPEAT_STR
 Repeat String
 -------------
 StringBuilder
 // @END_VERSION_ONLY REPEAT_STR
-
 // @BEGIN_VERSION_ONLY HISTOGRAM_ENTRY
 Histogram Entry
 ---------------
 sprintf("%-7.7s %d", word, count)
 // @END_VERSION_ONLY HISTOGRAM_ENTRY
-
 // @BEGIN_VERSION_ONLY HISTOGRAM
 Histogram
 ---------
