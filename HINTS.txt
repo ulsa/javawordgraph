@@ -36,9 +36,10 @@ public interface Function2<A1, A2, R> {
 // @BEGIN_VERSION_ONLY TO_BACKGROUND_FUNCTION
 To Background Function
 ----------------------
-Use java.util.concurrent.ExecutorService.submit. Create a new Function that
-submits to the ExecutorService a Callable that applies the original Function to
-the input of the new Function.
+Create a thread pool using Executors.newFixedThreadPool(10). Look at the docs
+for java.util.concurrent.ExecutorService.submit. Create a new Function from F
+to Future<T> that submits to the ExecutorService a Callable<T> that applies
+the original Function<T> to the input of the new Function.
 // @END_VERSION_ONLY TO_BACKGROUND_FUNCTION
 
 // @BEGIN_VERSION_ONLY BACKGROUND_TRANSFORM
