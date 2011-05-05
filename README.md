@@ -48,11 +48,11 @@ Other useful commands:
 	mvn lab:setStep -DlabStep=n
 
 Your workflow should be the following:
-# mvn lab:next
-# See INSTRUCTIONS.txt for instructions
-# Compile and run test cases to see what you need to do
-# (if necessary) Check HINTS.txt file for hints.
-# (if necessary) Check src/solution/java for a solution.
+1.  See INSTRUCTIONS.txt for instructions
+2.  Compile and run test cases to see what you need to do
+3.  (if necessary) Check HINTS.txt file for hints.
+4.  (if necessary) Check src/solution/java for a solution.
+5.  Once the tests run successfully, mvn lab:next to get the next step
 
 Notice: You will need to create classes and methods to fix compilation errors!
 
