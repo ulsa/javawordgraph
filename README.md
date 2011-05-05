@@ -3,8 +3,8 @@ a histogram of the results.
 
 Pre-requisites
 --------------
-Java JDK 5+ [download here](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-Maven 2+ [download here](http://maven.apache.org/download.html)
+-  Java JDK 5+ [download here](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+-  Maven 2+ [download here](http://maven.apache.org/download.html)
 
 Introduction
 ------------
@@ -43,9 +43,10 @@ to the current step in src/solution/java. To move to the next step, do this:
 	mvn lab:next
 
 Other useful commands:
-	mvn lab:currentStep
-	mvn lab:reset
-	mvn lab:setStep -DlabStep=n
+
+    mvn lab:currentStep
+    mvn lab:reset
+    mvn lab:setStep -DlabStep=n
 
 Your workflow should be the following:
 1.  See INSTRUCTIONS.txt for instructions
