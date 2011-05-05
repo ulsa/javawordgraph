@@ -63,9 +63,9 @@ public class Collections3 {
 
     // @BEGIN_VERSION GET_ALL
     public static <A> Collection<A> getAll(Collection<Future<A>> coll) {
-        return copyOf(transform(coll, Collections3.<A>fromFuture()));
-//      return copyOf(transform(coll, Collections3.fromFuture())); // does not work
-//      return copyOf(transform(coll, fromFuture())); // does not work
+        return transform(coll, Collections3.<A>fromFuture());
+//      return transform(coll, Collections3.fromFuture()); // does not work
+//      return transform(coll, fromFuture()); // does not work
     }
     // @END_VERSION GET_ALL
 

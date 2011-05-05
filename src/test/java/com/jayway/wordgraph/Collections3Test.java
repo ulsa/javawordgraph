@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
@@ -24,7 +25,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -86,7 +86,8 @@ public class Collections3Test {
     @Test
     public void backgroundTransformShouldHaveSameResult() throws Exception {
         String expected = "hello";
-        Collection<Future<String>> futures = Collections3.transformInBackground(Collections.<Object>singleton("world"), Functions.constant(expected));
+        Collection<Object> collection = Collections.<Object>singleton("world");
+        Collection<Future<String>> futures = Collections3.transformInBackground(collection, Functions.constant(expected));
         assertThat(Iterables.getOnlyElement(futures).get(1, TimeUnit.SECONDS), equalTo(expected));
     }
     
@@ -131,9 +132,9 @@ public class Collections3Test {
     @Test
     public void getAllOnCollectionOfFuturesShouldGetTheFuturesResults() throws Exception {
         Future<Object> future = mock(Future.class);
-        Object expected = Collections.singletonList(5);
+        Collection<Object> expected = Collections.<Object>singletonList(5);
         when(future.get(anyLong(), (TimeUnit)anyObject())).thenReturn(5);
-        assertThat(Collections3.getAll(Collections.singletonList(future)), equalTo(expected));
+        assertThatIterablesAreEqual(Collections3.getAll(Collections.singletonList(future)), expected);
     }
     // @END_VERSION GET_ALL
 
@@ -151,7 +152,7 @@ public class Collections3Test {
         // @BEGIN_VERSION PARALLEL_TRANSFORM
         result = Collections3.parallelTransform(Arrays.asList(1, 2, 3, 4, 5), timeConsumingCalculation);
         // @END_VERSION PARALLEL_TRANSFORM
-        assertThatCollection(result, is(new Integer[] {2, 4, 6, 8, 10}));
+        assertThatIterablesAreEqual(result, Arrays.asList(2, 4, 6, 8, 10));
         long after = System.currentTimeMillis();
         System.out.println("Transformation took " + (after-before) + " milliseconds");
         assertThat("Transform is running waaaay too slow!", after-before, is(lessThan(1200L)));
@@ -237,8 +238,7 @@ public class Collections3Test {
     }
     // @END_VERSION FOLD
 
-    // had trouble getting assertThat to compare a transformed collection with a list or array
-    public static void assertThatCollection(Collection<Integer> actual, Matcher<Integer[]> matcher) {
-        assertThat(actual.toArray(new Integer[actual.size()]), matcher);
+    public static <T> void assertThatIterablesAreEqual(Iterable<T> actual, Iterable<T> expected) {
+        assertTrue(Iterables.elementsEqual(actual, expected));
     }
 }

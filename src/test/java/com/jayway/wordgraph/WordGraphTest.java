@@ -1,5 +1,6 @@
 package com.jayway.wordgraph;
 
+import static com.jayway.wordgraph.Collections3Test.assertThatIterablesAreEqual;
 import static java.util.Collections.singletonMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -36,15 +37,15 @@ public class WordGraphTest {
     // @END_VERSION GATHER_WORDS_LOWERCASE
     @Test
     public void testGatherWords() {
-        String[] expected = new String[] {"mary", "had", "a", "little", "lamb"};
-        assertThatCollection(WordGraph.gatherWords("   mary had a\tlittle\n   lamb    "), is(expected));
+        Collection<String> expected = Arrays.asList("mary", "had", "a", "little", "lamb");
+        assertThatIterablesAreEqual(WordGraph.gatherWords("   mary had a\tlittle\n   lamb    "), expected);
 
         // @BEGIN_VERSION GATHER_WORDS_PUNCTUATION
-        assertThatCollection(WordGraph.gatherWords("., mary, had... a little; lamb!"), is(expected));
+        assertThatIterablesAreEqual(WordGraph.gatherWords("., mary, had... a little; lamb!"), expected);
         // @END_VERSION GATHER_WORDS_PUNCTUATION
 
         // @BEGIN_VERSION GATHER_WORDS_LOWERCASE
-        assertThatCollection(WordGraph.gatherWords("., MaRy, hAd... A liTTle; lAmb!"), is(expected));
+        assertThatIterablesAreEqual(WordGraph.gatherWords("., MaRy, hAd... A liTTle; lAmb!"), expected);
         // @END_VERSION GATHER_WORDS_LOWERCASE
     }
 
@@ -122,9 +123,4 @@ public class WordGraphTest {
         assertThat(WordGraph.histogram(input), is("mary ##\nwhy  ###\n"));
     }
     // @END_VERSION HISTOGRAM
-
-    // had trouble getting assertThat to compare a transformed collection with a list or array
-    public static void assertThatCollection(Collection<String> actual, Matcher<String[]> matcher) {
-        assertThat(actual.toArray(new String[actual.size()]), matcher);
-    }
 }

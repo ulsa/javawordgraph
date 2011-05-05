@@ -48,6 +48,9 @@ Background Transform
 OK, so the previous step produced a method that gives us a function that does
 whatever f does, but in the background. 
 
+Apply the background function you just implemented using Collections2.transform.
+Base the static method signature on Collections2.transform.
+
 The second step towards a parallel transform is to execute transform with a
 collection and your new background function. However, you should consider the
 consequences of laziness.
@@ -63,8 +66,14 @@ Start by writing a Function that turns a Future<A> back into an A.
 Get All
 -------
 Apply the fromFuture function that you wrote in the previous step to a
-collection of Futures. It's a regular transform, but again you should consider
-the consequences of laziness.
+collection of Futures.
+
+public static <A> Collection<A> getAll(Collection<Future<A>> coll) {
+   ...
+}
+
+Use Collections2.transform. Note that Java's type inference is pretty crappy,
+so you need to write something like Collections3.<A>fromFuture().
 // @END_VERSION_ONLY GET_ALL
 // @BEGIN_VERSION_ONLY REGULAR_TRANSFORM
 Regular Transform
@@ -80,8 +89,9 @@ next step.
 // @BEGIN_VERSION_ONLY PARALLEL_TRANSFORM
 Parallel Transform
 ------------------
-In this step, the test has been modified to use a parallel VERSION_ONLY of transform.
-Stitch together the two larger building blocks you have produced so far.
+In this step, the test has been modified to use a parallel version of transform.
+Stitch together the two larger building blocks you have produced so far. Make
+sure you get generic types right.
 // @END_VERSION_ONLY PARALLEL_TRANSFORM
 // @BEGIN_VERSION_ONLY REDUCE
 Reduce
