@@ -1,4 +1,4 @@
-// @BEGIN_VERSION HELLO_GENERICS
+// @BEGIN_VERSION_ONLY HELLO_GENERICS
 Hello Generics
 --------------
 Write a static method that repeats its input n times.
