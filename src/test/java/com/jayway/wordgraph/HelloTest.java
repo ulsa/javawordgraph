@@ -1,14 +1,20 @@
 package com.jayway.wordgraph;
 
+import static com.google.common.collect.Iterables.filter;
+import static com.google.common.collect.Iterables.size;
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Test;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 
 public class HelloTest {
     
@@ -27,6 +33,20 @@ public class HelloTest {
         Collection<Integer> expected = Arrays.asList(6, 6, 6);
         Collection<Integer> result = Hello.repeat(6, 3);
         assertThat(result, equalTo(expected));
+    }
+
+    @Test
+    public void thereShouldOnlyBeOneRepeatMethod() throws Exception {
+        int noRepeatMethods = size(filter(asList(Hello.class.getMethods()), withName("repeat")));
+        assertThat(noRepeatMethods, equalTo(1));
+    }
+
+    private static Predicate<Method> withName(final String methodName) {
+        return new Predicate<Method>() {
+            public boolean apply(Method input) {
+                return methodName.equals(input.getName());
+            }
+        };
     }
     // @END_VERSION HELLO_GENERICS2
 
