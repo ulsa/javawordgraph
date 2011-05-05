@@ -8,7 +8,7 @@ Pre-requisites
 
 Introduction
 ------------
-This lab is about Functional Programming in Java, using mainly Google Collections.
+This lab is about Functional Programming in Java, using mainly [Google Guava](http://code.google.com/p/guava-libraries/).
 The purpose is to build a little utility that shows a histogram graph of the number
 of occurrences of each word in a text file. Like this:
 
@@ -21,8 +21,8 @@ of occurrences of each word in a text file. Like this:
 	the        ##############
 
 In the process, you will learn about map, filter and reduce, or as they are
-called in Google Collections: transform, filter, and ... well, there is no
-reduce in Google Collections. There is no parallel transform either. Let's
+called in Google Guava: transform, filter, and ... well, there is no
+reduce in Google Guava. There is no parallel transform either. Let's
 implement those first, before we get into the wordgraph business.
 
 Quick Start
