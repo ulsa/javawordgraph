@@ -1,6 +1,9 @@
 // @BEGIN_VERSION_ONLY HELLO_GENERICS
 Hello Generics
 --------------
+The HelloTest class doesn't compile. Create a Hello class in src/main/java
+(not in src/test/java...).
+
 Write a static method that repeats its input n times.
 // @END_VERSION_ONLY HELLO_GENERICS
 // @BEGIN_VERSION_ONLY HELLO_GENERICS2
