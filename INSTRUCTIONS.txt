@@ -158,7 +158,7 @@ Back to the real business problem. In the test method comments, you can see
 the Clojure equivalents of the tests. I have added them there because I think
 that they convey the essence of the tests quite clearly.
 
-Write a function that extracts words from a string, splitting words on
+Write a method that extracts words from a string, splitting words on
 whitespace. Note that there is a main method that you can run on any text file
 of choice, like for example the file mary.txt in the project root.
 // @END_VERSION_ONLY GATHER_WORDS_WHITESPACE
