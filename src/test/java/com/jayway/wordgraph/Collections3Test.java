@@ -25,6 +25,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -233,7 +235,15 @@ public class Collections3Test {
     }
     // @END_VERSION FOLD
 
-    public static <T> void assertThatIterablesAreEqual(Iterable<T> actual, Iterable<T> expected) {
-        assertTrue(Iterables.elementsEqual(actual, expected));
+    public static <T> void assertThatIterablesAreEqual(Iterable<T> actual, final Iterable<T> expected) {
+        assertThat(actual, new BaseMatcher<Iterable<T>>() {
+            public boolean matches(Object a) {
+                return Iterables.elementsEqual(expected, (Iterable<T>)a);
+            }
+
+            public void describeTo(Description description) {
+                description.appendValue(expected);
+            }
+        });
     }
 }
