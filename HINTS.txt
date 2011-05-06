@@ -101,7 +101,7 @@ Use an iterator to check if no values, to get the first value, etc.
 // @BEGIN_VERSION_ONLY FOLD
 Fold
 ----
-Vanilla foreach.
+This is easier than reduce!
 // @END_VERSION_ONLY FOLD
 // @BEGIN_VERSION_ONLY GATHER_WORDS_WHITESPACE
 Gather Words, Whitespace
