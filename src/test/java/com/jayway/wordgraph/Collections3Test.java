@@ -186,14 +186,9 @@ public class Collections3Test {
         assertThat(Collections3.reduce(Arrays.asList(1, 2, 3, 4), times), is(24));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void reduceWithEmptyCollectionThrowsException() {
-        try {
-            Collections3.reduce(Collections.emptyList(), null);
-            fail("IllegalArgumentException expected");
-        } catch (IllegalArgumentException expected) {
-            // expected
-        }
+        Collections3.reduce(Collections.emptyList(), null);
     }
 
     @Test

@@ -103,12 +103,6 @@ Reduce takes a collection coll, and a function f. f is a function of 2
 arguments. Reduce returns the result of applying f to the first item in coll
 and the 2nd item, then applying f to that result and the 3rd item, etc.
 
-Here is an interface for the function f:
-
-    public interface Function2<A1, A2, R> {
-        public R apply(A1 a1, A2 a2);
-    }
-
 Here is a skeleton for reduce:
 
     public class Collections3 {

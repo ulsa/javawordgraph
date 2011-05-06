@@ -56,5 +56,6 @@ Your workflow should be the following:
 5.  Once the tests run successfully, mvn lab:next to get the next step
 
 Notice: You will need to create classes and methods to fix compilation errors!
+Make sure to create files in src/main/java!
 
 Good luck!
