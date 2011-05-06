@@ -49,6 +49,7 @@ Other useful commands:
     mvn lab:setStep -DlabStep=n
 
 Your workflow should be the following:
+
 1.  See INSTRUCTIONS.txt for instructions
 2.  Compile and run test cases to see what you need to do
 3.  (if necessary) Check HINTS.txt file for hints.
