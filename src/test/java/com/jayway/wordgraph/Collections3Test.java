@@ -155,7 +155,7 @@ public class Collections3Test {
         assertThatIterablesAreEqual(result, Arrays.asList(2, 4, 6, 8, 10));
         long after = System.currentTimeMillis();
         System.out.println("Transformation took " + (after-before) + " milliseconds");
-        assertThat("Transform is running waaaay too slow!", after-before, is(lessThan(1200L)));
+        assertThat("Transform is running waaaay too slow!", after-before, is(lessThan(1500L)));
     }
     // @END_VERSION REGULAR_TRANSFORM
 
