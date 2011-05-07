@@ -29,7 +29,7 @@ Quick Start
 -----------
 Check out this lab from github.com:
 
-	git clone git@github.com:ulsa/javawordgraph.git
+	git clone git://github.com/ulsa/javawordgraph.git
 
 The lab is constructed using [maven-lab-plugin](https://github.com/jayway/maven-lab-plugin).
 Initialize the lab to step 0 by running:
