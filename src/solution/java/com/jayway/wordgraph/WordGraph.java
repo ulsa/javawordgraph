@@ -162,11 +162,11 @@ public class WordGraph {
 
     // @BEGIN_VERSION HISTOGRAM_ENTRY
     public static String histogramEntry(Map<String, Integer> wordCount, int width) {
-        String format = "%-" + width + "." + width + "s %s";
         Entry<String, Integer> entry = wordCount.entrySet().iterator().next();
         String word = entry.getKey();
         Integer count = entry.getValue();
-        return String.format(format, word, repeatStr("#", count));
+        int blanks = width - word.length();
+        return String.format("%s%s %s", word, repeatStr(" ", blanks), repeatStr("#", count));
     }
     // @END_VERSION HISTOGRAM_ENTRY
 
