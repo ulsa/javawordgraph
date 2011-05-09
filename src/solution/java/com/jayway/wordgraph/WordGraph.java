@@ -8,7 +8,6 @@ import static com.google.common.collect.Lists.newLinkedList;
 import static com.jayway.wordgraph.Collections3.fold;
 // @END_VERSION FOLD
 import static java.util.Collections.max;
-import static java.util.Collections.singletonMap;
 import static java.util.Collections.sort;
 
 import java.io.File;
@@ -45,24 +44,24 @@ public class WordGraph {
     // @END_VERSION GATHER_WORDS_WHITESPACE
 
     // @BEGIN_VERSION SORT_COUNTED_WORDS
-    private static final Function<Entry<String, Integer>, Map<String, Integer>> ENTRY_TO_MAP = new Function<Entry<String, Integer>, Map<String, Integer>>() {
-        public Map<String, Integer> apply(Entry<String, Integer> from) {
-            return singletonMap(from.getKey(), from.getValue());
+    private static final Function<Entry<String, Integer>, WordCountPair> ENTRY_TO_PAIR = new Function<Entry<String, Integer>, WordCountPair>() {
+        public WordCountPair apply(Entry<String, Integer> from) {
+            return new WordCountPair(from.getKey(), from.getValue());
         }
     };
 
-    private static final Comparator<Map<String, Integer>> COMPARE_BY_VALUE = new Comparator<Map<String, Integer>>() {
-        public int compare(Map<String, Integer> o1, Map<String, Integer> o2) {
-            return o1.values().iterator().next().compareTo(o2.values().iterator().next());
+    private static final Comparator<WordCountPair> COMPARE_BY_COUNT = new Comparator<WordCountPair>() {
+        public int compare(WordCountPair o1, WordCountPair o2) {
+            return Integer.valueOf(o1.getCount()).compareTo(o2.getCount());
         }
     };
     // @END_VERSION SORT_COUNTED_WORDS
 
     // @BEGIN_VERSION HISTOGRAM
-    private static final Comparator<Map<String, Integer>> COMPARE_BY_KEY_LENGTH = new Comparator<Map<String, Integer>>() {
-        public int compare(Map<String, Integer> o1, Map<String, Integer> o2) {
-            Integer lengthFirst = o1.keySet().iterator().next().length();
-            Integer lengthSecond = o2.keySet().iterator().next().length();
+    private static final Comparator<WordCountPair> COMPARE_BY_WORD_LENGTH = new Comparator<WordCountPair>() {
+        public int compare(WordCountPair o1, WordCountPair o2) {
+            Integer lengthFirst = o1.getWord().length();
+            Integer lengthSecond = o2.getWord().length();
             return lengthFirst.compareTo(lengthSecond);
         }
     };
@@ -116,12 +115,12 @@ public class WordGraph {
         // filter non-empty elements
         result = filter(Arrays.asList(words), NO_EMPTY);
         // @END_VERSION_ONLY GATHER_WORDS_PUNCTUATION
-        // @BEGIN_VERSION_ONLY GATHER_WORDS_LOWERCASE
+        // @BEGIN_VERSION GATHER_WORDS_LOWERCASE
         // split on non-word characters
         words = Pattern.compile("\\W+").split(s);
         // filter non-empty elements and transform to lowercase
         result = transform(filter(Arrays.asList(words), NO_EMPTY), LOWER);
-        // @END_VERSION_ONLY GATHER_WORDS_LOWERCASE
+        // @END_VERSION GATHER_WORDS_LOWERCASE
         return result;
     }
     // @END_VERSION GATHER_WORDS_WHITESPACE
@@ -143,9 +142,9 @@ public class WordGraph {
     // @END_VERSION COUNT_WORDS
 
     // @BEGIN_VERSION SORT_COUNTED_WORDS
-    public static Collection<Map<String, Integer>> sortCountedWords(Map<String, Integer> words) {
-        List<Map<String, Integer>> maps = newLinkedList(transform(words.entrySet(), ENTRY_TO_MAP));
-        sort(maps, COMPARE_BY_VALUE);
+    public static Collection<WordCountPair> sortCountedWords(Map<String, Integer> words) {
+        List<WordCountPair> maps = newLinkedList(transform(words.entrySet(), ENTRY_TO_PAIR));
+        sort(maps, COMPARE_BY_COUNT);
         return maps;
     }
     // @END_VERSION SORT_COUNTED_WORDS
@@ -161,21 +160,20 @@ public class WordGraph {
     // @END_VERSION REPEAT_STR
 
     // @BEGIN_VERSION HISTOGRAM_ENTRY
-    public static String histogramEntry(Map<String, Integer> wordCount, int width) {
-        Entry<String, Integer> entry = wordCount.entrySet().iterator().next();
-        String word = entry.getKey();
-        Integer count = entry.getValue();
+    public static String histogramEntry(WordCountPair wordCount, int width) {
+        String word = wordCount.getWord();
+        Integer count = wordCount.getCount();
         int blanks = width - word.length();
         return String.format("%s%s %s", word, repeatStr(" ", blanks), repeatStr("#", count));
     }
     // @END_VERSION HISTOGRAM_ENTRY
 
     // @BEGIN_VERSION HISTOGRAM
-    public static String histogram(Collection<Map<String, Integer>> input) {
-        int maxWidth = max(input, COMPARE_BY_KEY_LENGTH).keySet().iterator().next().length();
+    public static String histogram(Collection<WordCountPair> input) {
+        int maxWidth = max(input, COMPARE_BY_WORD_LENGTH).getWord().length();
         StringBuilder sb = new StringBuilder();
         String newline = System.getProperty("line.separator");
-        for (Map<String, Integer> wordCount : input) {
+        for (WordCountPair wordCount : input) {
             sb.append(histogramEntry(wordCount, maxWidth));
             sb.append(newline);
         }

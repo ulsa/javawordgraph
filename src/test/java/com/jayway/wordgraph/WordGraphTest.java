@@ -1,7 +1,6 @@
 package com.jayway.wordgraph;
 
 import static com.jayway.wordgraph.Collections3Test.assertThatIterablesAreEqual;
-import static java.util.Collections.singletonMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import java.util.Arrays;
@@ -9,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableList;
@@ -78,11 +76,11 @@ public class WordGraphTest {
             .put("c", 2)
             .put("a", 1)
             .build();
-        Collection<Map<String, Integer>> expected = new ImmutableList.Builder<Map<String, Integer>>()
-            .add(singletonMap("a", 1))
-            .add(singletonMap("c", 2))
-            .add(singletonMap("b", 3))
-            .build();
+        Collection<WordCountPair> expected = new ImmutableList.Builder<WordCountPair>()
+        .add(new WordCountPair("a", 1))
+        .add(new WordCountPair("c", 2))
+        .add(new WordCountPair("b", 3))
+        .build();
         assertThat(WordGraph.sortCountedWords(input), is(expected));
     }
     // @END_VERSION SORT_COUNTED_WORDS
@@ -106,7 +104,7 @@ public class WordGraphTest {
     //     (= "betty   ######" (histogram-entry ["betty" 6] 7))))
     @Test
     public void testHistogramEntry() {
-        assertThat(WordGraph.histogramEntry(singletonMap("betty", 6), 7), is("betty   ######"));
+        assertThat(WordGraph.histogramEntry(new WordCountPair("betty", 6), 7), is("betty   ######"));
     }
     // @END_VERSION HISTOGRAM_ENTRY
 
@@ -116,9 +114,9 @@ public class WordGraphTest {
     //     (= "mary ##\nwhy  ###\n" (histogram [["mary" 2] ["why" 3]]))))
     @Test
     public void testHistogram() {
-        List<Map<String, Integer>> input = new ImmutableList.Builder<Map<String, Integer>>()
-                .add(singletonMap("mary", 2))
-                .add(singletonMap("why", 3))
+        List<WordCountPair> input = new ImmutableList.Builder<WordCountPair>()
+                .add(new WordCountPair("mary", 2))
+                .add(new WordCountPair("why", 3))
                 .build();
         assertThat(WordGraph.histogram(input), is("mary ##\nwhy  ###\n"));
     }

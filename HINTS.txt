@@ -6,7 +6,7 @@ Reload this file after moving to the next step, for further hints.
 // @BEGIN_VERSION_ONLY HELLO_GENERICS
 Hello Generics
 --------------
-You're on your own here...
+You're on your own on this first one...
 // @END_VERSION_ONLY HELLO_GENERICS
 // @BEGIN_VERSION_ONLY HELLO_GENERICS2
 Hello Generics2
@@ -124,12 +124,12 @@ Count Words
 This is the pseudo-code for counting stuff in a collection:
 
     (fold (function [counts x]
-      	        (assoc counts x (inc (get counts x 0))))
+      	       (assoc counts x (inc (get counts x 0))))
           {}
           coll))
 
-'counts' is a Map that accumulates the counts.
-'x' will be each element in 'coll'.
+'counts' is a Map that contains the accumulated counts.
+'x' will be the element to count.
 {} is an empty Map used as the initial value.
 
 Get the value of x from the Map counts, or zero if no x in counts:
@@ -140,6 +140,13 @@ Increase it by one:
 
 Associate to the key 'x', in the Map 'counts', the above number as the value:
     (assoc counts x (inc (get counts x 0)))
+
+Call the function first with the empty map and the first entry in coll, then 
+the resulting map and the second entry in coll, etc:
+    (fold (function [counts x]
+      	       (assoc counts x (inc (get counts x 0))))
+          {}
+          coll))
 // @END_VERSION_ONLY COUNT_WORDS
 // @BEGIN_VERSION_ONLY SORT_COUNTED_WORDS
 Sort Counted Words
@@ -154,10 +161,17 @@ StringBuilder
 // @BEGIN_VERSION_ONLY HISTOGRAM_ENTRY
 Histogram Entry
 ---------------
-sprintf("%-7.7s %d", word, count)
+  (let [r (- width (count word))]
+    (str word (repeat-str " " r) " " (repeat-str \# n))))
 // @END_VERSION_ONLY HISTOGRAM_ENTRY
 // @BEGIN_VERSION_ONLY HISTOGRAM
 Histogram
 ---------
-No hints yet.
+Use Collections2.max to find the max word length and use that as the width to
+histogramEntry. Interpose line.separator between the entries.
 // @END_VERSION_ONLY HISTOGRAM
+// @BEGIN_VERSION_ONLY DESIGN_QUESTIONS
+Design Questions
+----------------
+No hints yet.
+// @END_VERSION_ONLY DESIGN_QUESTIONS
