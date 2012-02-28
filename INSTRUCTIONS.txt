@@ -186,9 +186,8 @@ that fold implementation now?
 Sort Counted Words
 ------------------
 Sort the map by count and return a list of word/count pairs. What's the simplest
-implementation of a pair? I don't know, but we chose Map, so that's what you'll
-use. It might look funny with a Collection of Map from String to Integer, but
-remember that the Map is only representing a key-value pair.
+implementation of a pair? I don't know, but we chose to wrap the pair in a class
+WordCountPair, so that's what you'll use.
 // @END_VERSION_ONLY SORT_COUNTED_WORDS
 // @BEGIN_VERSION_ONLY REPEAT_STR
 Repeat String
