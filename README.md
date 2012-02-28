@@ -31,6 +31,10 @@ Check out this lab from github.com:
 
 	git clone git://github.com/ulsa/javawordgraph.git
 
+Change to the lab directory:
+
+	cd javawordgraph
+
 The lab is constructed using [maven-lab-plugin](https://github.com/jayway/maven-lab-plugin).
 Initialize the lab to step 0 by running:
 
