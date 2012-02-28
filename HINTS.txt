@@ -151,7 +151,7 @@ the resulting map and the second entry in coll, etc:
 // @BEGIN_VERSION_ONLY SORT_COUNTED_WORDS
 Sort Counted Words
 ------------------
-Transform the Map to a collection of Maps, then sort.
+Transform the Map to a collection of WordCountPairs, then sort.
 // @END_VERSION_ONLY SORT_COUNTED_WORDS
 // @BEGIN_VERSION_ONLY REPEAT_STR
 Repeat String
